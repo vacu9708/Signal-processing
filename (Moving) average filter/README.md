@@ -20,8 +20,8 @@ for time in range(333):
     filtered_sensor_value /= 111
     #-----
     # For plot
-    noise = random.randint(-5, 5) * 0.1
-    sensor_value = math.sin(time * 0.1 + noise)
+    noise = random.randint(-1, 1) * 0.1
+    sensor_value = math.sin(time * 0.1) + noise
     Sensor_values.append(sensor_value)
     filtered_sensor_values.append(filtered_sensor_value)
     #-----
