@@ -25,7 +25,7 @@ for time in range(333):
     filtered_sensor_values.append(filtered_sensor_value)
     #-----
 # Print
-pyplot.plot(Sensor_values)
+pyplot.plot(sensor_values)
 pyplot.plot(filtered_sensor_values)
 pyplot.show()
 ~~~
