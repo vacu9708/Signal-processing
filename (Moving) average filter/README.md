@@ -1,5 +1,5 @@
 # Average filter
->The average filter is the simplest filter used to remove noise of a signal, but requires more time than the Moving average filter(explained below) for the same accuracy.
+>The average filter is the simplest filter used to remove noise of a signal, but requires more time than the Moving average filter for the same accuracy.<br>
 >It removes the noise by taking the average at a point of the signal for an instant.
 
 ## Code (The original signal is a noisy sinusoidal wave)
