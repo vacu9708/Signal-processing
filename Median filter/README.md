@@ -1,6 +1,6 @@
 # Median filter
->Average filter can hardly remove impulse noises(spikes in a signal). Median filter is needed for this case.
->This is usually used for image processing.
+>Average filter can hardly remove impulse noises(spikes in a signal). Median filter is needed for this case.<br>
+>It is usually used for image processing.
 
 ~~~Python
 import math
