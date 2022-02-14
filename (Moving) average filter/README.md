@@ -17,8 +17,8 @@ for time in range(333):
     value = 0
     filtered_value = 0
     for i in range(20):
-        value = math.sin(time * 0.1) + noise()
-        filtered_value += value # analogRead
+        value = math.sin(time * 0.1) + noise() # same as analogRead
+        filtered_value += value
     filtered_value /= 20
     #-----
     # For plot
@@ -61,7 +61,7 @@ for time in range(333):
     # Removing the oldest value and putting the next value
     values_subset.pop(0)
     noise = random.randint(-20, 20) * 0.01
-    values_subset.append(math.sin(time * 0.1) + noise) # analogRead
+    values_subset.append(math.sin(time * 0.1) + noise) # same as analogRead
     #-----
     # Finding the average
     filtered_value = 0
