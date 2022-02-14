@@ -1,5 +1,5 @@
 # Median filter
->The filters where averages are used can hardly deal with impulse noises(spikes in a signal). Median filter is needed for this case.<br>
+>The filters where averages are used can hardly remove impulse noises(spikes in a signal). Median filter is needed for this case.<br>
 >It is usually used for image processing.
 
 ~~~Python
