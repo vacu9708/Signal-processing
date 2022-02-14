@@ -10,28 +10,29 @@ from matplotlib import pyplot
 
 def noise():   
     return random.randint(-20, 20) * 0.01
-sensor_values = [] # For plot
-filtered_sensor_values = [] # For plot
+values = [] # For plot
+filtered_values = [] # For plot
 for time in range(333):
     # Finding the average
-    filtered_sensor_value = 0
-    for i in range(111):
-        filtered_sensor_value += math.sin(time * 0.1) + noise() # analogRead
-    filtered_sensor_value /= 111
+    value = 0
+    filtered_value = 0
+    for i in range(20):
+        value = math.sin(time * 0.1) + noise()
+        filtered_value += value # analogRead
+    filtered_value /= 20
     #-----
     # For plot
-    sensor_value = math.sin(time * 0.1) + noise()
-    sensor_values.append(sensor_value)
-    filtered_sensor_values.append(filtered_sensor_value)
+    values.append(value)
+    filtered_values.append(filtered_value)
     #-----
 # Print
-pyplot.plot(sensor_values)
-pyplot.plot(filtered_sensor_values)
+pyplot.plot(values)
+pyplot.plot(filtered_values)
 pyplot.show()
 ~~~
 
 ## Output (Blue : original signal, Orange : filtered signal)
-![image](https://user-images.githubusercontent.com/67142421/153942671-38bbdeab-1726-48bc-b8c1-7385ff377a75.png)
+![image](https://user-images.githubusercontent.com/67142421/153949228-f6b8ec48-8acd-4110-b9f1-c2657ea6bb37.png)
 
 
 # Moving average filter
@@ -49,32 +50,32 @@ import math
 import random
 from matplotlib import pyplot
 
-sensor_values_subset = [] # Will be a sinusoidal wave.
+values_subset = [] # Will be a sinusoidal wave.
 # Initialization
 for i in range(20):
-    sensor_values_subset.append(0)
+    values_subset.append(0)
 #-----
-sensor_values = [] # For plot
-filtered_sensor_values = [] # For plot
+values = [] # For plot
+filtered_values = [] # For plot
 for time in range(333):
     # Removing the oldest value and putting the next value
-    sensor_values_subset.pop(0)
+    values_subset.pop(0)
     noise = random.randint(-20, 20) * 0.01
-    sensor_values_subset.append(math.sin(time * 0.1) + noise) # analogRead
+    values_subset.append(math.sin(time * 0.1) + noise) # analogRead
     #-----
     # Finding the average
-    filtered_sensor_value = 0
-    for sensor_value in sensor_values_subset:
-        filtered_sensor_value += sensor_value
-    filtered_sensor_value /= 20
+    filtered_value = 0
+    for value in values_subset:
+        filtered_value += value
+    filtered_value /= 20
     #-----
     #For plot
-    sensor_values.append(sensor_values_subset[19])
-    filtered_sensor_values.append(filtered_sensor_value)
+    values.append(values_subset[19])
+    filtered_values.append(filtered_value)
     #-----
 # Print
-pyplot.plot(sensor_values)
-pyplot.plot(filtered_sensor_values)
+pyplot.plot(values)
+pyplot.plot(filtered_values)
 pyplot.show()
 ~~~
 
