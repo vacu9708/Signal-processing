@@ -8,8 +8,7 @@ import math
 import random
 from matplotlib import pyplot
 
-sensor_values = [] # Will be sinusoidal
-Sensor_values = [] # For plot
+sensor_values = [] # For plot
 filtered_sensor_values = [] # For plot
 for time in range(333):
     # Finding the average
@@ -21,8 +20,8 @@ for time in range(333):
     #-----
     # For plot
     noise = random.randint(-1, 1) * 0.1
-    Sensor_value = math.sin(time * 0.1) + noise
-    Sensor_values.append(Sensor_value)
+    sensor_value = math.sin(time * 0.1) + noise
+    sensor_values.append(sensor_value)
     filtered_sensor_values.append(filtered_sensor_value)
     #-----
 # Print
