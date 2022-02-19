@@ -1,5 +1,5 @@
 # Average filter
->The average filter is the simplest filter used to remove noise of a signal, but requires more time than the Moving average filter for the same accuracy.<br>
+>The average filter is the simplest filter used to remove noise of a signal, but requires more calculations than Moving average filter for the same accuracy.<br>
 >It removes the noise by taking the average at a point of the signal for an instant.
 
 ## Code (The original signal is a noisy sinusoidal wave)
@@ -17,7 +17,7 @@ for time in range(333):
     value = 0
     filtered_value = 0
     for i in range(20):
-        value = math.sin(time * 0.1) + noise() # same as analogRead
+        value = math.sin((time * 0.1) + (i % 10 * 0.01)) + noise() # same as analogRead
         filtered_value += value
     filtered_value /= 20
     #-----
@@ -32,12 +32,11 @@ pyplot.show()
 ~~~
 
 ## Output (Blue : original signal, Orange : filtered signal)
-![image](https://user-images.githubusercontent.com/67142421/153949228-f6b8ec48-8acd-4110-b9f1-c2657ea6bb37.png)
-
+![image](https://user-images.githubusercontent.com/67142421/154814234-d2d88676-a600-473e-bda3-d2af9ec7c203.png)
 
 # Moving average filter
 >The moving average filter is the most common filter used to remove noise in Digital Signal processing, mainly because it is the easiest to understand and use as well as
->the fastest.<br>
+>the fastest, requiring less calculations than Average filter for the same accuracy.<br>
 >The signal by Moving average filter is delayed quite a bit because previous values are used for smoothing.
 
 ## Working process
