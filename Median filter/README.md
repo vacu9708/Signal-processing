@@ -25,7 +25,7 @@ for time in range(333):
     # Finding the median of a subset
     value = 0
     for i in range(20):
-        value = math.sin(time * 0.1) + noise() # same as analogRead
+        value = math.sin((time * 0.1) + (i // 10 * 0.01)) + noise() # same as analogRead
         values_subset[i] = value
     values_subset.sort() # Sort to find the median value
     filtered_value = values_subset[10] # Median value
@@ -40,4 +40,4 @@ pyplot.plot(filtered_values)
 pyplot.show()
 ~~~
 ## Output
-![image](https://user-images.githubusercontent.com/67142421/153947334-5ce7624c-8ffe-4042-8961-a72212ac2087.png)
+![image](https://user-images.githubusercontent.com/67142421/154813936-5b6c2b05-7b50-438c-bc95-6b3a8a9d8d16.png)
