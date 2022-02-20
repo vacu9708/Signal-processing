@@ -35,9 +35,10 @@ for time in range(333):
     filtered_values.append(filtered_value)
     #-----
 # Print
-pyplot.plot(values)
-pyplot.plot(filtered_values)
+pyplot.plot(values, label = 'Original signal')
+pyplot.plot(filtered_values, label = 'Filtered signal')
+pyplot.legend()
 pyplot.show()
 ~~~
 ## Output
-![image](https://user-images.githubusercontent.com/67142421/154814024-3c0232b8-e7d9-4ddc-ab71-08f900201894.png)
+![image](https://user-images.githubusercontent.com/67142421/154861725-8d06371d-40f7-4343-a11f-4fbcc4254367.png)
