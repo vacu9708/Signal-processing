@@ -11,8 +11,6 @@
 ![Derivation](https://user-images.githubusercontent.com/67142421/154923859-250a665b-b8da-4e3b-a68a-c2278874d83b.jpg)
 
 ## Making a square wave
-
-## Deriving the fourier series of a square wave
 ![Deriving the fourier series of a square wave](https://user-images.githubusercontent.com/67142421/154939586-b14b9984-4fcd-4efc-a0a0-77ec0d4f5336.jpg)
 
 ## Graph
