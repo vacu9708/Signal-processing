@@ -13,7 +13,7 @@
 ## Making a square wave
 ![Deriving the fourier series of a square wave](https://user-images.githubusercontent.com/67142421/154939586-b14b9984-4fcd-4efc-a0a0-77ec0d4f5336.jpg)
 
-## Graph
+## Code
 ~~~Python
 import math
 from matplotlib import pyplot
