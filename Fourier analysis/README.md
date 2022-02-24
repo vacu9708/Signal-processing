@@ -38,5 +38,3 @@ pyplot.show()
 
 ## Output
 ![image](https://user-images.githubusercontent.com/67142421/154935742-871c2a93-b759-40b3-9710-778fd68ae1a5.png)
-
-# Fourier transform
