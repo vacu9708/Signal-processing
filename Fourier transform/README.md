@@ -41,14 +41,6 @@ plt.figure()
 #-----
 N = len(fx) # Number of sampling
 
-'''def DFT2(fx): # Using DFS matrix
-    n = np.arange(N)
-    k = n.reshape((N, 1)) # k : frequency domain
-    e = np.exp(-2j * pi * k * n / N)
-    fx = fx.reshape((N, 1))
-    X = np.dot(e, fx) # DFS matrix. Nested loop can be substituted with the dot product of matrix
-    return X # Return the Fourier transformed function'''
-
 def DFT(fx):
     X_real = np.zeros(length_of_frequency_domain)
     X_imaginary = np.zeros(length_of_frequency_domain)
@@ -59,12 +51,11 @@ def DFT(fx):
             X_real[k] += fx[n] * math.cos(2 * pi * k * n / N) # If k is a real number, it doesn't work
             X_imaginary[k] += fx[n] * math.sin(2 * pi * k * n / N)
         X[k] = math.sqrt(X_real[k]**2 + X_imaginary[k]**2) # Pythagorean theorem
-
     return X # Return the Fourier transformed function
 
-X = DFT(fx) / N # Divide N to prevent the amplitude from being too big.
+X = DFT(fx) / N # Divide N to prevent the amplitude from being too big(Normalization)
 
-plt.stem(frequency_domain, X, 'b', markerfmt = ' ', basefmt = 'b')
+plt.stem(frequency_domain, abs(X), 'b', markerfmt = ' ', basefmt = 'b')
 #plt.plot(frequency_domain, X)
 plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
