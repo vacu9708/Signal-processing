@@ -31,7 +31,7 @@ t = np.arange(0, 1 / precision, sampling_interval) # The more time the signal is
 
 freq = 2
 fx = 3*np.sin(2*pi*freq*t)
-freq = 5.5
+freq = 7.4
 fx += np.sin(2*pi*freq*t)
 
 plt.plot(t, fx)
@@ -40,6 +40,14 @@ plt.ylabel('Amplitude')
 plt.figure()
 #-----
 N = len(fx) # Number of sampling
+
+'''def DFT2(fx): # Using DFS matrix
+    n = np.arange(N)
+    k = frequency_domain.reshape((length_of_frequency_domain, 1))
+    e = np.exp(-2j * pi * k * n / N)
+    fx = fx.reshape((len(fx), 1))
+    X = np.dot(e, fx) # Dot product
+    return abs(X) # Pythagorean theorem'''
 
 def DFT(fx):
     X_real = np.zeros(length_of_frequency_domain)
@@ -53,16 +61,16 @@ def DFT(fx):
         X[k] = math.sqrt(X_real[k]**2 + X_imaginary[k]**2) # Pythagorean theorem
     return X # Return the Fourier transformed function
 
-X = DFT(fx) / N # Divide N to prevent the amplitude from being too big(Normalization)
+X = DFT(fx) / N # Divide by N to prevent the amplitude from being too big(Normalization)
 
-plt.stem(frequency_domain, abs(X), 'b', markerfmt = ' ', basefmt = 'b')
+plt.stem(frequency_domain, X, 'b', markerfmt = ' ', basefmt = 'b')
 #plt.plot(frequency_domain, X)
 plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.show()
 ~~~
 ## Output
-![image](https://user-images.githubusercontent.com/67142421/155615284-60108f35-f59c-4db5-866c-498c3b3e11e8.png)
+![image](https://user-images.githubusercontent.com/67142421/155623469-4580c00a-e210-456b-8c3a-e5b0a6358265.png)
 
 # Fast Fourier Transform
 > The Discrete Fourier Transform takes **O(n^2)** time because it has a nested loop, that is, it is slow.
