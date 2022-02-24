@@ -69,7 +69,7 @@ plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.show()
 ~~~
-## Output
+## Output ( f(x) = 3sin(2t) + sin(7.4t) )
 ![image](https://user-images.githubusercontent.com/67142421/155623469-4580c00a-e210-456b-8c3a-e5b0a6358265.png)
 
 # Fast Fourier Transform
