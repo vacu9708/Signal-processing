@@ -9,7 +9,7 @@ For a computer, a discrete time Fourier transform is performed to analyze a func
 
 ## Discrete time Fourier Transform
 ![image](https://user-images.githubusercontent.com/67142421/155603855-35d16458-2fec-49c5-80d4-88d247fb215f.png)<br>
-### By euler's formula :
+### By Euler's formula :
 ![image](https://user-images.githubusercontent.com/67142421/155604064-dac589d7-b367-4648-9202-df41ea56f8be.png)
 
 ~~~Python
