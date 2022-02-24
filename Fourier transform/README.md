@@ -17,6 +17,30 @@ from matplotlib import pyplot as plt
 import numpy as np
 import math
 
+# Frequency domain
+precision = 0.1
+frequency_domain = np.arange(0, 50, precision)
+length_of_frequency_domain = len(frequency_domain)
+#-----
+pi = np.pi
+
+# Sinusoidal waves
+sampling_rate = 100 # per second
+sampling_interval = 1 / sampling_rate
+t = np.arange(0, 1 / precision, sampling_interval) # The more time the signal is measured, the more prcise the transform is
+
+freq = 2
+fx = 3*np.sin(2*pi*freq*t)
+freq = 5.5
+fx += np.sin(2*pi*freq*t)
+
+plt.plot(t, fx)
+plt.xlabel('Time')
+plt.ylabel('Amplitude')
+plt.figure()
+#-----
+N = len(fx) # Number of sampling
+
 '''def DFT2(fx): # Using DFS matrix
     n = np.arange(N)
     k = n.reshape((N, 1)) # k : frequency domain
@@ -32,49 +56,22 @@ def DFT(fx):
 
     for k in range(length_of_frequency_domain):
         for n in range(N):
-            X_real[k] += fx[n] * math.cos(2 * pi * k * n / N) # If k is a real number, an error occurs
+            X_real[k] += fx[n] * math.cos(2 * pi * k * n / N) # If k is a real number, it doesn't work
             X_imaginary[k] += fx[n] * math.sin(2 * pi * k * n / N)
         X[k] = math.sqrt(X_real[k]**2 + X_imaginary[k]**2) # Pythagorean theorem
 
     return X # Return the Fourier transformed function
 
-sampling_rate = 1000 # per second
-sampling_interval = 1 / sampling_rate
-t = np.arange(0, 1, sampling_interval)
-
-minimum_change = 0.1
-frequency_domain = np.arange(0, 50, minimum_change)
-length_of_frequency_domain = len(frequency_domain)
-
-pi = np.pi
-
-# sinusoidal waves
-freq = 2
-fx = 3*np.sin(2*pi*freq*t)
-freq = 5.5
-fx += np.sin(2*pi*freq*t)
-
-plt.plot(t, fx)
-plt.ylabel('Amplitude')
-plt.figure()
-
-freq = 2
-fx = 3*np.sin(2*pi*freq*t / minimum_change) # divide minimum_change to express a decimal place 
-freq = 5.5
-fx += np.sin(2*pi*freq*t / minimum_change)
-#-----
-N = len(fx) # Number of sampling
-
 X = DFT(fx) / N # Divide N to prevent the amplitude from being too big.
 
-#plt.stem(frequency_domain, X, 'b', markerfmt = ' ', basefmt = 'b')
-plt.plot(frequency_domain, X)
-plt.xlabel('Hz')
+plt.stem(frequency_domain, X, 'b', markerfmt = ' ', basefmt = 'b')
+#plt.plot(frequency_domain, X)
+plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.show()
 ~~~
 ## Output
-![image](https://user-images.githubusercontent.com/67142421/155602638-ef2ceb40-916b-4ec0-ac17-df0b9565dfbc.png)
+![image](https://user-images.githubusercontent.com/67142421/155615284-60108f35-f59c-4db5-866c-498c3b3e11e8.png)
 
 # Fast Fourier Transform
 > The Discrete Fourier Transform takes **O(n^2)** time because it has a nested loop, that is, it is slow.
