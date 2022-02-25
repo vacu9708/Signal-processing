@@ -1,14 +1,20 @@
 # Fourier transform
->A Fourier transform is a method to find the frequencies of a function.
->The time domain is transformed to frequency domain.
+![image](https://user-images.githubusercontent.com/67142421/155687402-a9ae5d4a-9baa-4a83-ac6e-b504ebf805df.png)
+>A Fourier transform is a method to find the frequencies of a function. The time domain is transformed to frequency domain.<br>
+>The amplitude of a frequency is a complex number.
 
-## Continuous time fourier transform
-![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
-
+## Continuous time fourier transform (ω = 2πf)
+![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)<br>
 For a computer, a discrete time Fourier transform is performed to analyze a function in the frequency domain.
 
-## Discrete time Fourier Transform
-![image](https://user-images.githubusercontent.com/67142421/155603855-35d16458-2fec-49c5-80d4-88d247fb215f.png)<br>
+## Discrete time Fourier Transform (Induced by Riemann sum integral)
+![image](https://user-images.githubusercontent.com/67142421/155689010-f04e9a51-ccba-4951-81d2-6346de16f5fc.png)
+
+![image](https://user-images.githubusercontent.com/67142421/155687366-75207445-8ab9-49fe-9505-6c11786e877f.png)<br>
+* The infinitesimal dt is 1 because it is discrete time.
+* n(sample) corresponds to t(time).
+* k corresponds to f (k'th frequency in the frequency domain)
+
 ### By Euler's formula :
 ![image](https://user-images.githubusercontent.com/67142421/155604064-dac589d7-b367-4648-9202-df41ea56f8be.png)
 
