@@ -105,7 +105,7 @@ plt.ylabel('Amplitude')
 plt.show()
 ~~~
 ## Output ( f(x) = sin(2t) + 2sin(4.5t) )
-![image](https://user-images.githubusercontent.com/67142421/155848552-e68560a6-353b-427a-b1fe-fa2e2fb31071.png)
+![image](https://user-images.githubusercontent.com/67142421/155848726-c0dc0b03-fedb-4295-9f6d-0d60ef41438d.png)
 ![image](https://user-images.githubusercontent.com/67142421/155848706-20983ffc-9f2b-4412-94db-524cad96c3d1.png)
 
 # Fast Fourier Transform
