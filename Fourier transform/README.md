@@ -68,7 +68,7 @@ def DFT(fx):
     X_imaginary = np.zeros(length_of_frequency_domain)
     X = np.zeros(length_of_frequency_domain) # Fourier transformed function
 
-    for k in range(int(length_of_frequency_domain)):
+    for k in range(length_of_frequency_domain):
         for n in range(N):
             X_real[k] += fx[n] * math.cos(2 * pi * sampling_time * frequency_resolution * k * n / N)
             X_imaginary[k] += fx[n] * math.sin(2 * pi * sampling_time * frequency_resolution * k * n / N)
