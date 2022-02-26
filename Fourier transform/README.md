@@ -18,6 +18,11 @@ For a computer, a discrete time Fourier transform is performed to analyze a func
 ### By Euler's formula :
 ![image](https://user-images.githubusercontent.com/67142421/155604064-dac589d7-b367-4648-9202-df41ea56f8be.png)
 
+### Characteristics
+* maximum frequency = sampling frequency / 2
+* The longer time the signal is measured, the better the frequency resolution is. 
+  For example : to measure 1 Hz, the signal has to be recorded for 1 second and to measure 0.1 Hz, the signal has to be recorded for 10 seconds.
+
 ~~~Python
 from matplotlib import pyplot as plt
 import numpy as np
