@@ -24,64 +24,89 @@ For a computer, a discrete time Fourier transform is performed to analyze a func
   For example : to measure 1 Hz, the signal has to be recorded for 1 second and to measure 0.1 Hz, the signal has to be recorded for 10 seconds.
 
 ~~~Python
+import time
 from matplotlib import pyplot as plt
 import numpy as np
 import math
 
-# Frequency domain
-precision = 0.1
-frequency_domain = np.arange(0, 50, precision)
-length_of_frequency_domain = len(frequency_domain)
-#-----
+start_time = time.time()
+
 pi = np.pi
-
 # Sinusoidal waves
-sampling_rate = 100 # per second
-sampling_interval = 1 / sampling_rate
-t = np.arange(0, 1 / precision, sampling_interval) # The more time the signal is measured, the more prcise the transform is
-
-freq = 2
-fx = 3*np.sin(2*pi*freq*t)
-freq = 7.4
-fx += np.sin(2*pi*freq*t)
+sampling_time = 0.1
+sampling_frequency = 2048*2
+t = np.arange(0, sampling_time, sampling_time/sampling_frequency) # The longer period the signal is measured, the better the frequency resolution is.
+freq = 30
+fx = np.sin(2*pi*freq*t)
+freq = 85.5
+fx += 2*np.sin(2*pi*freq*t)
 
 plt.plot(t, fx)
 plt.xlabel('Time')
 plt.ylabel('Amplitude')
 plt.figure()
 #-----
-N = len(fx) # Number of sampling
+# Frequency domain
+max_frequency = sampling_frequency / 2
+frequency_resolution = 0.1
+frequency_domain = np.arange(0, 200, frequency_resolution)
+length_of_frequency_domain = len(frequency_domain)
+#-----
 
-'''def DFT2(fx): # Using DFS matrix
+'''def DFT2(fx): # Using matrix
+    N = len(fx)
     n = np.arange(N)
     k = frequency_domain.reshape((length_of_frequency_domain, 1))
     e = np.exp(-2j * pi * k * n / N)
-    fx = fx.reshape((len(fx), 1))
+    fx = fx.reshape((N, 1))
     X = np.dot(e, fx) # Dot product
-    return abs(X) # Pythagorean theorem'''
+    return X / (N / 2) # Pythagorean theorem'''
 
 def DFT(fx):
+    N = len(fx) # Number of sampling
     X_real = np.zeros(length_of_frequency_domain)
     X_imaginary = np.zeros(length_of_frequency_domain)
-    X = np.zeros(length_of_frequency_domain)
+    X = np.zeros(length_of_frequency_domain) # Fourier transformed function
 
-    for k in range(length_of_frequency_domain):
+    for k in range(int(length_of_frequency_domain)):
         for n in range(N):
-            X_real[k] += fx[n] * math.cos(2 * pi * k * n / N) # If k is a real number, it doesn't work
-            X_imaginary[k] += fx[n] * math.sin(2 * pi * k * n / N)
+            X_real[k] += fx[n] * math.cos(2 * pi * sampling_time * frequency_resolution * k * n / N)
+            X_imaginary[k] += fx[n] * math.sin(2 * pi * sampling_time * frequency_resolution * k * n / N)
         X[k] = math.sqrt(X_real[k]**2 + X_imaginary[k]**2) # Pythagorean theorem
-    return X # Return the Fourier transformed function
 
-X = DFT(fx) / N # Divide by N to prevent the amplitude from being too big(Normalization)
+    return X / (N / 2) # # Divide X by N to prevent the amplitude from being too big(Normalization)
 
-plt.stem(frequency_domain, X, 'b', markerfmt = ' ', basefmt = 'b')
-#plt.plot(frequency_domain, X)
+def FFT2(fx):
+    N = len(fx)
+    
+    if N == 1:
+        return fx
+    elif N % 2 != 0:
+        print('DFT is performed instead since N has to be a power of 2 for FFT')
+        return DFT(fx)
+    else:
+        X_even = FFT2(fx[::2])
+        X_odd = FFT2(fx[1::2])
+        factor = np.exp(-2j*pi*np.arange(N) / N)
+        
+        X = np.concatenate( [X_even+factor[:int(N/2)]*X_odd, X_even+factor[int(N/2):]*X_odd] )
+        return X
+
+X = DFT(fx)
+print('Elapsed time : ',time.time() - start_time)
+
+'''n_oneside = len(fx)//2
+frequency_domain = frequency_domain[:n_oneside]
+X = X[:n_oneside]/n_oneside'''
+plt.plot(frequency_domain, abs(X))
+#plt.stem(frequency_domain, abs(X), 'b', markerfmt=" ", basefmt="-b")
 plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.show()
 ~~~
-## Output ( f(x) = 3sin(2t) + sin(7.4t) )
-![image](https://user-images.githubusercontent.com/67142421/155623469-4580c00a-e210-456b-8c3a-e5b0a6358265.png)
+## Output ( f(x) = sin(3t) + 2sin(4.5t) )
+![image](https://user-images.githubusercontent.com/67142421/155848552-e68560a6-353b-427a-b1fe-fa2e2fb31071.png)
+![image](https://user-images.githubusercontent.com/67142421/155848570-f4408ce6-ddb3-47b0-bb0e-014b6f96cee4.png)
 
 # Fast Fourier Transform
 > The Discrete Fourier Transform takes **O(n^2)** time because it has a nested loop, that is, it is slow.
