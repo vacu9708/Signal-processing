@@ -33,12 +33,12 @@ start_time = time.time()
 
 pi = np.pi
 # Sinusoidal waves
-sampling_time = 0.1
+sampling_time = 10
 sampling_frequency = 2048*2
 t = np.arange(0, sampling_time, sampling_time/sampling_frequency) # The longer period the signal is measured, the better the frequency resolution is.
-freq = 30
+freq = 2
 fx = np.sin(2*pi*freq*t)
-freq = 85.5
+freq = 4.5
 fx += 2*np.sin(2*pi*freq*t)
 
 plt.plot(t, fx)
@@ -104,9 +104,9 @@ plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.show()
 ~~~
-## Output ( f(x) = sin(3t) + 2sin(4.5t) )
+## Output ( f(x) = sin(2t) + 2sin(4.5t) )
 ![image](https://user-images.githubusercontent.com/67142421/155848552-e68560a6-353b-427a-b1fe-fa2e2fb31071.png)
-![image](https://user-images.githubusercontent.com/67142421/155848570-f4408ce6-ddb3-47b0-bb0e-014b6f96cee4.png)
+![image](https://user-images.githubusercontent.com/67142421/155848706-20983ffc-9f2b-4412-94db-524cad96c3d1.png)
 
 # Fast Fourier Transform
 > The Discrete Fourier Transform takes **O(n^2)** time because it has a nested loop, that is, it is slow.
