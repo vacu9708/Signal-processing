@@ -19,7 +19,7 @@ For a computer, a discrete time Fourier transform is performed to analyze a func
 ![image](https://user-images.githubusercontent.com/67142421/155604064-dac589d7-b367-4648-9202-df41ea56f8be.png)
 
 ### Characteristics
-* maximum frequency = sampling frequency / 2
+* maximum frequency limit = sampling frequency / (2 * sampling time)
 * The longer time the signal is measured, the better the frequency resolution is. 
   For example : to measure 1 Hz, the signal has to be recorded for 1 second and to measure 0.1 Hz, the signal has to be recorded for 10 seconds.
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
@@ -49,8 +49,8 @@ plt.ylabel('Amplitude')
 plt.figure()
 #-----
 # Frequency domain
-max_frequency = sampling_frequency / 2
 frequency_resolution = 0.1
+max_frequency = sampling_frequency / (2 * sampling_time)
 frequency_domain = np.arange(0, 200, frequency_resolution)
 length_of_frequency_domain = len(frequency_domain)
 #-----
@@ -87,9 +87,6 @@ plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.show()
 ~~~
-## Output ( f(x) = sin(2t) + 2sin(4.5t) )
-![image](https://user-images.githubusercontent.com/67142421/155848726-c0dc0b03-fedb-4295-9f6d-0d60ef41438d.png)
-![image](https://user-images.githubusercontent.com/67142421/155848706-20983ffc-9f2b-4412-94db-524cad96c3d1.png)
 
 # Fast Fourier Transform
 > The Discrete Fourier Transform takes **O(n^2)** time because it has a nested loop, that is, it is slow.
@@ -98,6 +95,120 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/67142421/155605699-0773c7d0-99fa-4773-ac15-3ddf48958146.png)
 
 ~~~Python
+import time
+from matplotlib import pyplot as plt
+import numpy as np
+import math
+from cmath import exp
+
+start_time = time.time()
+
+pi = np.pi
+# Sinusoidal waves
+sampling_time = 1
+sampling_frequency = 2048
+t = np.arange(0, sampling_time, sampling_time/sampling_frequency) # The longer period the signal is measured, the better the frequency resolution is.
+freq = 20
+fx = np.sin(2*pi*freq*t)
+freq = 40
+fx += 2*np.sin(2*pi*freq*t)
+
+plt.plot(t, fx)
+plt.xlabel('Time')
+plt.ylabel('Amplitude')
+plt.figure()
+#-----
+# Frequency domain
+frequency_resolution = 1
+max_frequency = sampling_frequency / (2 * sampling_time)
+frequency_domain = np.arange(0, max_frequency, frequency_resolution)
+length_of_frequency_domain = len(frequency_domain)
+#-----
+
+class Complex_number:
+    real = 0
+    imaginary = 0
+
+    def __init__(self, real, imaginary):
+        self.real = real
+        self.imaginary = imaginary
+
+def complex_addition(a, b):
+    result = Complex_number
+    result.real = a.real + b.real
+    result.imaginary = a.imaginary + b.imaginary
+    return result
+
+def complex_subtration(a, b):
+    result = Complex_number
+    result.real = a.real - b.real
+    result.imaginary = a.imaginary - b.imaginary
+    return result
+
+def complex_multiplication(a, b):
+    result = Complex_number
+    result.real = a.real * b.real - a.imaginary * b.imaginary
+    result.imaginary = a.real * b.imaginary + a.imaginary * b.real
+    return result
+
+def absolute_complex_array(complex_array):
+    result = np.zeros(len(complex_array))
+    for i in range(len(complex_array)):
+        result[i] = math.sqrt(complex_array[i].real**2 + complex_array[i].imaginary**2)
+    return result
+
+def FFT(fx):
+    N = len(fx) # N has to be a power of 2 for FFT.
+
+    if N == 1:
+        return np.array([Complex_number(fx[0], 0)])
+    
+    X_even = FFT(fx[::2]) # FFT of the signal at even indices
+    X_odd = FFT(fx[1::2]) # at odd indices
+
+    e = np.array([Complex_number for i in range(N//2)])
+    for n in range(N//2):
+        e[n] = Complex_number(math.cos(2*pi*n / N), math.sin(2*pi*n / N))
+
+    X_left = np.array([Complex_number for i in range(N//2)])
+    X_right = np.array([Complex_number for i in range(N//2)])
+    for n in range(N//2):
+        X_left[n] = complex_addition(X_even[n], complex_multiplication(e[n], X_odd[n]))
+        X_right[n] = complex_subtration(X_even[n], complex_multiplication(e[n], X_odd[n]))
+
+    X = np.concatenate((X_left, X_right))
+    return X
+
+def FFT2(fx):
+    N = len(fx) # N has to be a power of 2 for FFT.
+
+    if N == 1:
+        return fx
+    
+    X_even = FFT2(fx[::2]) # FFT of the signal at even indices
+    X_odd = FFT2(fx[1::2]) # at odd indices
+
+    #e = np.exp(-2j*pi*np.arange(N) / N)
+    #X = np.concatenate( (X_even + e[:N//2] * X_odd, X_even + e[N//2:] * X_odd) )
+    
+    e = np.exp(-2j*pi*np.arange(N//2) / N)
+    X = np.concatenate( (X_even + e * X_odd, X_even - e * X_odd) )
+    return X
+
+X = absolute_complex_array(FFT(fx))
+#X = abs(FFT2(fx))
+print('Elapsed time : ',time.time() - start_time)
+
+n_oneside = len(fx)//2
+frequency_domain = frequency_domain[:n_oneside]
+X = X[:n_oneside]/n_oneside
+plt.plot(frequency_domain, X)
+#plt.stem(frequency_domain, X, 'b', markerfmt=" ", basefmt="-b")
+plt.xlabel('Frequency(Hz)')
+plt.ylabel('Amplitude')
+plt.show()
 ~~~
 
-## Output
+## Output ( f(x) = sin(2t) + 2sin(4.5t) )
+![image](https://user-images.githubusercontent.com/67142421/155848726-c0dc0b03-fedb-4295-9f6d-0d60ef41438d.png)
+![image](https://user-images.githubusercontent.com/67142421/155848706-20983ffc-9f2b-4412-94db-524cad96c3d1.png)
