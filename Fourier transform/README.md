@@ -81,8 +81,8 @@ def DFT(fx):
 X = DFT(fx)
 print('Elapsed time : ',time.time() - start_time)
 
-plt.plot(frequency_domain, X)
-#plt.stem(frequency_domain, abs(X), 'b', markerfmt=" ", basefmt="-b")
+#plt.plot(frequency_domain, X)
+plt.stem(frequency_domain, abs(X), 'b', markerfmt=" ", basefmt="-b")
 plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.show()
@@ -99,7 +99,6 @@ import time
 from matplotlib import pyplot as plt
 import numpy as np
 import math
-from cmath import exp
 
 start_time = time.time()
 
@@ -126,30 +125,18 @@ length_of_frequency_domain = len(frequency_domain)
 #-----
 
 class Complex_number:
-    real = 0
-    imaginary = 0
-
     def __init__(self, real, imaginary):
         self.real = real
         self.imaginary = imaginary
-
-def complex_addition(a, b):
-    result = Complex_number
-    result.real = a.real + b.real
-    result.imaginary = a.imaginary + b.imaginary
-    return result
-
-def complex_subtration(a, b):
-    result = Complex_number
-    result.real = a.real - b.real
-    result.imaginary = a.imaginary - b.imaginary
-    return result
-
-def complex_multiplication(a, b):
-    result = Complex_number
-    result.real = a.real * b.real - a.imaginary * b.imaginary
-    result.imaginary = a.real * b.imaginary + a.imaginary * b.real
-    return result
+    
+    def __add__(self, b):
+        return Complex_number(self.real + b.real, self.imaginary + b.imaginary)
+    
+    def __sub__(self, b):
+        return Complex_number(self.real - b.real, self.imaginary - b.imaginary)
+    
+    def __mul__(self, b):
+        return Complex_number(self.real * b.real - self.imaginary * b.imaginary, self.real * b.imaginary + self.imaginary * b.real)
 
 def absolute_complex_array(complex_array):
     result = np.zeros(len(complex_array))
@@ -168,15 +155,15 @@ def FFT(fx):
 
     e = np.array([Complex_number for i in range(N//2)])
     for n in range(N//2):
-        e[n] = Complex_number(math.cos(2*pi*n / N), math.sin(2*pi*n / N))
+        e[n] = Complex_number(math.cos(2*pi*n / N), math.sin(2*pi*n / N)) * X_odd[n]
 
     X_left = np.array([Complex_number for i in range(N//2)])
     X_right = np.array([Complex_number for i in range(N//2)])
     for n in range(N//2):
-        X_left[n] = complex_addition(X_even[n], complex_multiplication(e[n], X_odd[n]))
-        X_right[n] = complex_subtration(X_even[n], complex_multiplication(e[n], X_odd[n]))
-
+        X_left[n] = X_even[n] + e[n]
+        X_right[n] = X_even[n] - e[n]
     X = np.concatenate((X_left, X_right))
+
     return X
 
 def FFT2(fx):
@@ -188,22 +175,23 @@ def FFT2(fx):
     X_even = FFT2(fx[::2]) # FFT of the signal at even indices
     X_odd = FFT2(fx[1::2]) # at odd indices
 
-    #e = np.exp(-2j*pi*np.arange(N) / N)
-    #X = np.concatenate( (X_even + e[:N//2] * X_odd, X_even + e[N//2:] * X_odd) )
+    e = np.exp(-2j*pi*np.arange(N) / N)
+    X = np.concatenate( (X_even + e[:N//2] * X_odd, X_even + e[N//2:] * X_odd) )
     
-    e = np.exp(-2j*pi*np.arange(N//2) / N)
-    X = np.concatenate( (X_even + e * X_odd, X_even - e * X_odd) )
+    #e = np.exp(-2j*pi*np.arange(N//2) / N)
+    #X = np.concatenate( (X_even + e * X_odd, X_even - e * X_odd) )
+
     return X
 
 X = absolute_complex_array(FFT(fx))
 #X = abs(FFT2(fx))
 print('Elapsed time : ',time.time() - start_time)
 
-n_oneside = len(fx)//2
-frequency_domain = frequency_domain[:n_oneside]
-X = X[:n_oneside]/n_oneside
-plt.plot(frequency_domain, X)
-#plt.stem(frequency_domain, X, 'b', markerfmt=" ", basefmt="-b")
+one_side = len(fx)//2
+frequency_domain = frequency_domain[:one_side]
+X = X[:one_side]/one_side
+#plt.plot(frequency_domain, X)
+plt.stem(frequency_domain, X, 'b', markerfmt=" ", basefmt="-b")
 plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.show()
