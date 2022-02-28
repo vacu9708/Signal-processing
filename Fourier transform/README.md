@@ -20,7 +20,7 @@ For a computer, a discrete time Fourier transform is performed to analyze a func
 
 ### Characteristics
 * maximum frequency limit = sampling frequency / (2 * sampling time)
-* The longer time the signal is measured, the better the frequency resolution is. 
+* The frequency resolution can be increased by either reducing the samplling frequency or increasing the size of the sample buffer..
   For example : to measure 1 Hz, the signal has to be recorded for 1 second and to measure 0.1 Hz, the signal has to be recorded for 10 seconds.
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
 
@@ -29,60 +29,60 @@ import time
 from matplotlib import pyplot as plt
 import numpy as np
 import math
-from cmath import exp
 
 start_time = time.time()
 
 pi = np.pi
-# Sinusoidal waves
-sampling_time = 10
-sampling_frequency = 2048
-t = np.arange(0, sampling_time, sampling_time/sampling_frequency) # The longer period the signal is measured, the better the frequency resolution is.
-freq = 2
-fx = np.sin(2*pi*freq*t)
-freq = 4.5
-fx += 2*np.sin(2*pi*freq*t)
 
-plt.plot(t, fx)
+# Sampling
+sample_buffer_size = 2**11
+frequency_resolution = 0.1
+sampling_frequency = sample_buffer_size*frequency_resolution
+fx = np.zeros(sample_buffer_size) # The longer period the signal is measured, the better the frequency resolution is.
+
+signal_frequency = [2.5, 4.5]
+for n in range(sample_buffer_size):
+    fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
+#-----
+plt.plot(np.arange(sample_buffer_size), fx)
 plt.xlabel('Time')
 plt.ylabel('Amplitude')
 plt.figure()
 #-----
 # Frequency domain
-frequency_resolution = 0.1
-max_frequency = sampling_frequency / (2 * sampling_time)
-frequency_domain = np.arange(0, 200, frequency_resolution)
-length_of_frequency_domain = len(frequency_domain)
+max_frequency = sampling_frequency / 2
+frequency_domain = np.arange(0, max_frequency, frequency_resolution)
+max_k = int(max_frequency / frequency_resolution)
 #-----
 
 def DFT2(fx): # Using matrix
     N = len(fx)
     n = np.arange(N)
-    k = frequency_domain.reshape((length_of_frequency_domain, 1))
+    k = frequency_domain.reshape((max_k, 1))
     e = np.exp(-2j * pi * k * n / N)
     fx = fx.reshape((N, 1))
     X = np.dot(e, fx) # Dot product
-    return X # Pythagorean theorem'''
+    return abs(X) # Pythagorean theorem'''
 
 def DFT(fx):
     N = len(fx) # Number of sampling
-    X_real = np.zeros(length_of_frequency_domain)
-    X_imaginary = np.zeros(length_of_frequency_domain)
-    X = np.zeros(length_of_frequency_domain) # Fourier transformed function
+    X_real = np.zeros(max_k)
+    X_imaginary = np.zeros(max_k)
+    X = np.zeros(max_k) # Fourier transformed function
 
-    for k in range(length_of_frequency_domain):
+    for k in range(max_k):
         for n in range(N):
-            X_real[k] += fx[n] * math.cos(2 * pi * sampling_time * frequency_resolution * k * n / N)
-            X_imaginary[k] += fx[n] * -math.sin(2 * pi * sampling_time * frequency_resolution * k * n / N)
+            X_real[k] += fx[n] * math.cos(2 * pi * k * n / N)
+            X_imaginary[k] += fx[n] * -math.sin(2 * pi * k * n / N)
         X[k] = math.sqrt(X_real[k]**2 + X_imaginary[k]**2) # Pythagorean theorem (|X|)
 
     return X / (N / 2) # # Divide X by N to prevent the amplitude from being too big(Normalization)
 
 X = DFT(fx)
-print('Elapsed time : ',time.time() - start_time)
 
+print('Elapsed time : ',time.time() - start_time)
 #plt.plot(frequency_domain, X)
-plt.stem(frequency_domain, abs(X), 'b', markerfmt=" ", basefmt="-b")
+plt.stem(frequency_domain, X, 'b', markerfmt=" ", basefmt="-b")
 plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.show()
@@ -98,7 +98,8 @@ plt.show()
 ## How to derive FFT
 ![image](https://user-images.githubusercontent.com/67142421/155978584-d9babdd0-05ef-4f0e-a35b-6cb830c04f42.png)
 ### Therefore,
-![image](https://user-images.githubusercontent.com/67142421/155981114-a269d99e-71df-44fc-b428-d4da35459b7a.png)
+![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)
+
 ~~~Python
 import time
 from matplotlib import pyplot as plt
@@ -108,25 +109,25 @@ import math
 start_time = time.time()
 
 pi = np.pi
-# Sinusoidal waves
-sampling_time = 1
-sampling_frequency = 2048
-t = np.arange(0, sampling_time, sampling_time/sampling_frequency) # The longer period the signal is measured, the better the frequency resolution is.
-freq = 20
-fx = np.sin(2*pi*freq*t)
-freq = 40
-fx += 2*np.sin(2*pi*freq*t)
 
-plt.plot(t, fx)
+# Sampling
+sample_buffer_size = 2**11
+frequency_resolution = 0.1
+sampling_frequency = sample_buffer_size*frequency_resolution
+fx = np.zeros(sample_buffer_size) # The longer period the signal is measured, the better the frequency resolution is.
+
+signal_frequency = [2.5, 4.5]
+for n in range(sample_buffer_size):
+    fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
+#-----
+plt.plot(np.arange(sample_buffer_size), fx)
 plt.xlabel('Time')
 plt.ylabel('Amplitude')
 plt.figure()
 #-----
 # Frequency domain
-frequency_resolution = 1
-max_frequency = sampling_frequency / (2 * sampling_time)
+max_frequency = sampling_frequency / 2
 frequency_domain = np.arange(0, max_frequency, frequency_resolution)
-length_of_frequency_domain = len(frequency_domain)
 #-----
 
 class Complex_number:
@@ -188,13 +189,11 @@ def FFT2(fx):
 
     return X
 
-X = absolute_complex_array(FFT(fx))
+X = absolute_complex_array(FFT(fx)) / (len(fx)/2)
 #X = abs(FFT2(fx))
-print('Elapsed time : ',time.time() - start_time)
+X = X[:len(fx)//2]
 
-one_side = len(fx)//2
-frequency_domain = frequency_domain[:one_side]
-X = X[:one_side]/one_side
+print('Elapsed time : ',time.time() - start_time)
 #plt.plot(frequency_domain, X)
 plt.stem(frequency_domain, X, 'b', markerfmt=" ", basefmt="-b")
 plt.xlabel('Frequency(Hz)')
