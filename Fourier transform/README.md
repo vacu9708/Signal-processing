@@ -98,7 +98,7 @@ plt.show()
 ## How to derive FFT
 ![image](https://user-images.githubusercontent.com/67142421/155978584-d9babdd0-05ef-4f0e-a35b-6cb830c04f42.png)
 ### Therefore,
-![image](https://user-images.githubusercontent.com/67142421/155980456-6c50e198-13bf-479b-9d1a-b3de7b5220c1.png)
+![image](https://user-images.githubusercontent.com/67142421/155981114-a269d99e-71df-44fc-b428-d4da35459b7a.png)
 ~~~Python
 import time
 from matplotlib import pyplot as plt
