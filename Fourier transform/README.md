@@ -19,9 +19,9 @@ For a computer, a discrete time Fourier transform is performed to analyze a func
 ![image](https://user-images.githubusercontent.com/67142421/155604064-dac589d7-b367-4648-9202-df41ea56f8be.png)
 
 ### Characteristics
-* maximum frequency limit = sampling frequency / (2 * sampling time)
-* The frequency resolution can be increased by either reducing the samplling frequency or increasing the size of the sample buffer..
-  For example : to measure 1 Hz, the signal has to be recorded for 1 second and to measure 0.1 Hz, the signal has to be recorded for 10 seconds.
+* Maximum frequency limit = sampling frequency / (2 * sampling time)
+* The frequency resolution can be increased by either reducing the samplling frequency or increasing the size of the sample buffer.<br>
+  Frequency resolution = sampling frequency / sample buffer size
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
 
 ~~~Python
