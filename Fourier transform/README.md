@@ -36,8 +36,7 @@ pi = np.pi
 
 # Sampling
 sample_buffer_size = 2**11
-frequency_resolution = 0.1
-sampling_frequency = sample_buffer_size*frequency_resolution
+sampling_frequency = (2**11)*0.1
 fx = np.zeros(sample_buffer_size) # The longer period the signal is measured, the better the frequency resolution is.
 
 signal_frequency = [2.5, 4.5]
@@ -50,6 +49,7 @@ plt.ylabel('Amplitude')
 plt.figure()
 #-----
 # Frequency domain
+frequency_resolution = sampling_frequency/sample_buffer_size
 max_frequency = sampling_frequency / 2
 frequency_domain = np.arange(0, max_frequency, frequency_resolution)
 max_k = int(max_frequency / frequency_resolution)
@@ -112,8 +112,7 @@ pi = np.pi
 
 # Sampling
 sample_buffer_size = 2**11
-frequency_resolution = 0.1
-sampling_frequency = sample_buffer_size*frequency_resolution
+sampling_frequency = (2**11)*0.1
 fx = np.zeros(sample_buffer_size) # The longer period the signal is measured, the better the frequency resolution is.
 
 signal_frequency = [2.5, 4.5]
@@ -126,6 +125,7 @@ plt.ylabel('Amplitude')
 plt.figure()
 #-----
 # Frequency domain
+frequency_resolution = sampling_frequency/sample_buffer_size
 max_frequency = sampling_frequency / 2
 frequency_domain = np.arange(0, max_frequency, frequency_resolution)
 #-----
