@@ -92,8 +92,13 @@ plt.show()
 > The Discrete Fourier Transform takes **O(n^2)** time because it has a nested loop, that is, it is slow.
 > The Fast Fourier transform was made to solve this problem and is a essential core of the modern technology.
 
+## Speed difference between DFT and FFT
 ![image](https://user-images.githubusercontent.com/67142421/155605699-0773c7d0-99fa-4773-ac15-3ddf48958146.png)
 
+## How to derive FFT
+![image](https://user-images.githubusercontent.com/67142421/155978584-d9babdd0-05ef-4f0e-a35b-6cb830c04f42.png)
+### Therefore,
+![image](https://user-images.githubusercontent.com/67142421/155980456-6c50e198-13bf-479b-9d1a-b3de7b5220c1.png)
 ~~~Python
 import time
 from matplotlib import pyplot as plt
