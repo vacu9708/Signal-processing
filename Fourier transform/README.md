@@ -3,13 +3,13 @@
 >A Fourier transform is a method to find the frequencies of a function. The time domain is transformed to frequency domain.<br>
 >The amplitude of a frequency is a complex number.
 
-## Continuous time fourier transform (ω = 2πf)
-![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)<br>
-For a computer, a discrete time Fourier transform is performed to analyze a function in the frequency domain.
+## Fourier transform (ω = 2πf)
+![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
 
-## Discrete time Fourier Transform (Induced by Riemann sum integral)
+## Discrete time Fourier Transform (Derived by Riemann sum integral from the Fourier Transform in contious time)
+A discrete time Fourier transform is performed to analyze a signal in the frequency domain with a computer.
+
 ![image](https://user-images.githubusercontent.com/67142421/155689010-f04e9a51-ccba-4951-81d2-6346de16f5fc.png)
-
 ![image](https://user-images.githubusercontent.com/67142421/155687366-75207445-8ab9-49fe-9505-6c11786e877f.png)<br>
 * The infinitesimal dt is 1 because it is discrete time.
 * n(sample) corresponds to t(time).
@@ -19,9 +19,11 @@ For a computer, a discrete time Fourier transform is performed to analyze a func
 ![image](https://user-images.githubusercontent.com/67142421/155604064-dac589d7-b367-4648-9202-df41ea56f8be.png)
 
 ### Characteristics
-* Maximum frequency limit = sampling frequency / (2 * sampling time)
-* The frequency resolution can be increased by either reducing the samplling frequency or increasing the size of the sample buffer.<br>
-  Frequency resolution = sampling frequency / sample buffer size
+* Maximum frequency limit = sampling frequency / 2
+* Frequency resolution 
+  >Frequency resolution = sampling frequency / sample buffer size<br>
+  >The frequency resolution can be increased by either reducing the samplling frequency or increasing the size of the sample buffer, which means
+  >it will take longer to fill the buffer if we desire increased resolution.
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
 
 ~~~Python
@@ -36,8 +38,8 @@ pi = np.pi
 
 # Sampling
 sample_buffer_size = 2**11
-sampling_frequency = (2**11)*0.1
-fx = np.zeros(sample_buffer_size) # The longer period the signal is measured, the better the frequency resolution is.
+sampling_frequency = (2**11)*0.5 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
+fx = np.zeros(sample_buffer_size)
 
 signal_frequency = [2.5, 4.5]
 for n in range(sample_buffer_size):
@@ -112,8 +114,8 @@ pi = np.pi
 
 # Sampling
 sample_buffer_size = 2**11
-sampling_frequency = (2**11)*0.1
-fx = np.zeros(sample_buffer_size) # The longer period the signal is measured, the better the frequency resolution is.
+sampling_frequency = (2**11)*0.5 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
+fx = np.zeros(sample_buffer_size)
 
 signal_frequency = [2.5, 4.5]
 for n in range(sample_buffer_size):
