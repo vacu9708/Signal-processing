@@ -6,7 +6,7 @@
 ## Fourier transform (ω = 2πf)
 ![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
 
-## Discrete time Fourier Transform (Derived by Riemann sum integral from the Fourier Transform in contious time)
+## Discrete time Fourier Transform (Derived by Riemann sum integral from the Fourier Transform in continuous time)
 A discrete time Fourier transform is performed to analyze a signal in the frequency domain with a computer.
 
 ![image](https://user-images.githubusercontent.com/67142421/155689010-f04e9a51-ccba-4951-81d2-6346de16f5fc.png)
@@ -22,7 +22,7 @@ A discrete time Fourier transform is performed to analyze a signal in the freque
 * Maximum frequency limit = sampling frequency / 2
 * Frequency resolution 
   >Frequency resolution = sampling frequency / sample buffer size<br>
-  >The frequency resolution can be increased by either reducing the samplling frequency or increasing the size of the sample buffer, which means
+  >The frequency resolution can be increased by either reducing the sampling frequency or increasing the size of the sample buffer, which means
   >it will take longer to fill the buffer if we desire increased resolution.
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
 
@@ -92,7 +92,7 @@ plt.show()
 
 # Fast Fourier Transform
 > The Discrete Fourier Transform takes **O(n^2)** time because it has a nested loop, that is, it is slow.
-> The Fast Fourier transform was made to solve this problem and is a essential core of the modern technology.
+> The Fast Fourier transform was made to solve this problem and is an essential core of the modern technology.
 
 ## Speed difference between DFT and FFT
 ![image](https://user-images.githubusercontent.com/67142421/155605699-0773c7d0-99fa-4773-ac15-3ddf48958146.png)
