@@ -92,7 +92,7 @@ plt.show()
 
 # Fast Fourier Transform
 > The Discrete Fourier Transform takes **O(n^2)** time because it has a nested loop, that is, it is slow.
-> The Fast Fourier transform was made to solve this problem and is an essential core of the modern technology.
+> The Fast Fourier transform was made to solve this problem and is an essential core of the signal processing.
 
 ## Speed difference between DFT and FFT
 ![image](https://user-images.githubusercontent.com/67142421/155605699-0773c7d0-99fa-4773-ac15-3ddf48958146.png)
