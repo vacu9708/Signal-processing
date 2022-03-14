@@ -102,6 +102,8 @@ plt.show()
 ### Therefore,
 ![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)
 
+![image](https://user-images.githubusercontent.com/67142421/158124937-f4da4cc6-8eb6-4d17-ba14-9c60cb65790e.png)
+
 ~~~Python
 import time
 from matplotlib import pyplot as plt
