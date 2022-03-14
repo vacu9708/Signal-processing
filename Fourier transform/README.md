@@ -1,7 +1,7 @@
 # Fourier transform
 ![image](https://user-images.githubusercontent.com/67142421/155687402-a9ae5d4a-9baa-4a83-ac6e-b504ebf805df.png)
->A Fourier transform is a method to find the frequencies of a function. The time domain is transformed to frequency domain.<br>
->The amplitude of a frequency is a complex number.
+>A Fourier transform is a method to find the frequencies of a function. The time domain is transformed to a frequency domain.<br>
+>The amplitude of a frequency is a complex number, so it needs to be converted to a real number through Pythagorean theorem
 
 ## Fourier transform (ω = 2πf)
 ![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
