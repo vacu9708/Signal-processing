@@ -68,9 +68,9 @@ def DFT2(fx): # Using matrix
 
 def DFT(fx):
     N = len(fx) # Number of sampling
+    X = np.zeros(max_k) # Fourier transformed function
     X_real = np.zeros(max_k)
     X_imaginary = np.zeros(max_k)
-    X = np.zeros(max_k) # Fourier transformed function
 
     for k in range(max_k):
         for n in range(N):
@@ -158,7 +158,7 @@ def FFT(fx):
     if N == 1:
         return np.array([Complex_number(fx[0], 0)])
     
-    X_even = FFT(fx[::2]) # FFT of the signal at even indices
+    X_even = FFT(fx[::2]) # Fourier transformed function of the signal at even indices
     X_odd = FFT(fx[1::2]) # at odd indices
 
     e = np.array([Complex_number for i in range(N//2)])
