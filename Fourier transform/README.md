@@ -148,7 +148,7 @@ class Complex_number:
     def __mul__(self, b):
         return Complex_number(self.real * b.real - self.imaginary * b.imaginary, self.real * b.imaginary + self.imaginary * b.real)
 
-def absolute_complex_array(complex_array):
+def absolute_complex_array(complex_array): # Making complex numbers real numbers through Pythagorean theorem
     result = np.zeros(len(complex_array))
     for i in range(len(complex_array)):
         result[i] = math.sqrt(complex_array[i].real**2 + complex_array[i].imaginary**2)
