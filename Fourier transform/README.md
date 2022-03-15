@@ -114,12 +114,6 @@ start_time = time.time()
 
 pi = np.pi
 
-# Frequency domain
-frequency_resolution = sampling_frequency/sample_buffer_size
-max_frequency = sampling_frequency / 2
-frequency_domain = np.arange(0, max_frequency, frequency_resolution)
-#-----
-
 class Complex_number:
     def __init__(self, real, imaginary):
         self.real = real
@@ -190,18 +184,24 @@ def FFT2(fx):
     return X
 
 # Sampling
-sample_buffer_size = 2**11
-sampling_frequency = (2**11)*0.5 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
+sample_buffer_size = 2**12
+sampling_frequency = (2**12)*0.5 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
 fx = np.zeros(sample_buffer_size)
 
 signal_frequency = [2.5, 4.5]
 for n in range(sample_buffer_size):
+    # n/sampling_frequency : n'th sampling
     fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
-#-----
-plt.plot(np.arange(sample_buffer_size), fx)
+
+plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), fx)
 plt.xlabel('Time')
 plt.ylabel('Amplitude')
 plt.figure()
+#-----
+# Frequency domain
+frequency_resolution = sampling_frequency/sample_buffer_size
+max_frequency = sampling_frequency / 2
+frequency_domain = np.arange(0, max_frequency, frequency_resolution)
 #-----
 
 X = absolute_complex_array(FFT(fx)) / (len(fx)/2)
