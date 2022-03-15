@@ -102,10 +102,7 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/67142421/158342808-af6c272c-cce6-41de-999a-8af8bb85acfd.png)
 ### In other words : ![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)
 
-## The process of this algorithm
-![image](https://user-images.githubusercontent.com/67142421/158382223-ba4ba679-4891-4030-b58f-d9f256c5b016.png)
-
-![image](https://user-images.githubusercontent.com/67142421/158124937-f4da4cc6-8eb6-4d17-ba14-9c60cb65790e.png)
+### [Click -> The time complexity of Divide and conquer method](https://github.com/vacu9708/Algorithm/tree/main/Sorting%20algorithm/Merge%20sort)
 
 ~~~Python
 import time
