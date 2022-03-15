@@ -114,20 +114,6 @@ start_time = time.time()
 
 pi = np.pi
 
-# Sampling
-sample_buffer_size = 2**11
-sampling_frequency = (2**11)*0.5 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
-fx = np.zeros(sample_buffer_size)
-
-signal_frequency = [2.5, 4.5]
-for n in range(sample_buffer_size):
-    fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
-#-----
-plt.plot(np.arange(sample_buffer_size), fx)
-plt.xlabel('Time')
-plt.ylabel('Amplitude')
-plt.figure()
-#-----
 # Frequency domain
 frequency_resolution = sampling_frequency/sample_buffer_size
 max_frequency = sampling_frequency / 2
@@ -202,6 +188,21 @@ def FFT2(fx):
     #X = np.concatenate( (X_even + e * X_odd, X_even - e * X_odd) )
 
     return X
+
+# Sampling
+sample_buffer_size = 2**11
+sampling_frequency = (2**11)*0.5 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
+fx = np.zeros(sample_buffer_size)
+
+signal_frequency = [2.5, 4.5]
+for n in range(sample_buffer_size):
+    fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
+#-----
+plt.plot(np.arange(sample_buffer_size), fx)
+plt.xlabel('Time')
+plt.ylabel('Amplitude')
+plt.figure()
+#-----
 
 X = absolute_complex_array(FFT(fx)) / (len(fx)/2)
 #X = abs(FFT2(fx))
