@@ -91,17 +91,20 @@ plt.show()
 ~~~
 
 # Fast Fourier Transform
-> The Discrete Fourier Transform takes **O(n^2)** time because it has a nested loop, that is, it is slow.
-> The Fast Fourier transform was made to solve this problem and is an essential core of the signal processing.
+> The Discrete Fourier Transform takes **O(n^2)** time because it has a nested loop, that is, it is slow.<br>
+> The Fast Fourier transform algorithm was made to solve this problem and is one of the essential cores of signal processing.<br>
+> The main idea is that *Divide and conquer* method can be used to convert it to an algorithm that takes **O(NlogN)**.
 
 ## Speed difference between DFT and FFT
 ![image](https://user-images.githubusercontent.com/67142421/155605699-0773c7d0-99fa-4773-ac15-3ddf48958146.png)
 
 ## How to derive FFT
 ![image](https://user-images.githubusercontent.com/67142421/158342808-af6c272c-cce6-41de-999a-8af8bb85acfd.png)
-### In other words,
-![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)
-### The process of this algorithm
+### In other words : ![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)
+
+## The process of this algorithm
+![image](https://user-images.githubusercontent.com/67142421/158382223-ba4ba679-4891-4030-b58f-d9f256c5b016.png)
+
 ![image](https://user-images.githubusercontent.com/67142421/158124937-f4da4cc6-8eb6-4d17-ba14-9c60cb65790e.png)
 
 ~~~Python
@@ -163,18 +166,28 @@ def FFT(fx):
     X_even = FFT(fx[::2]) # Fourier transformed function of the signal at even indices
     X_odd = FFT(fx[1::2]) # at odd indices
 
-    e = np.array([Complex_number for i in range(N//2)])
+    e = np.array([Complex_number for i in range(N)])
+    for k in range(N):
+        e[k] = Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N))
+
+    X_left = np.array([Complex_number for i in range(N//2)])
+    X_right = np.array([Complex_number for i in range(N//2)])
     for n in range(N//2):
-        e[n] = Complex_number(math.cos(2*pi*n / N), math.sin(2*pi*n / N)) * X_odd[n]
+        X_left[n] = X_even[n] + X_odd[n] * e[n]
+        X_right[n] = X_even[n] + X_odd[n] * e[N//2 + n]
+    X = np.concatenate((X_left, X_right))
+
+    return X
+    '''Also works
+    e = np.array([Complex_number for i in range(N//2)])
+    for k in range(N//2):
+        e[k] = Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N)) * X_odd[n]
 
     X_left = np.array([Complex_number for i in range(N//2)])
     X_right = np.array([Complex_number for i in range(N//2)])
     for n in range(N//2):
         X_left[n] = X_even[n] + e[n]
-        X_right[n] = X_even[n] - e[n]
-    X = np.concatenate((X_left, X_right))
-
-    return X
+        X_right[n] = X_even[n] - e[n]'''
 
 def FFT2(fx):
     N = len(fx) # N has to be a power of 2 for FFT.
