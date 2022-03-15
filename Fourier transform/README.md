@@ -98,7 +98,7 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/67142421/155605699-0773c7d0-99fa-4773-ac15-3ddf48958146.png)
 
 ## How to derive FFT
-![image](https://user-images.githubusercontent.com/67142421/155978584-d9babdd0-05ef-4f0e-a35b-6cb830c04f42.png)
+![image](https://user-images.githubusercontent.com/67142421/158342808-af6c272c-cce6-41de-999a-8af8bb85acfd.png)
 ### Therefore,
 ![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)
 
