@@ -72,7 +72,7 @@ def DFT(fx):
     X_real = np.zeros(max_k)
     X_imaginary = np.zeros(max_k)
 
-    for k in range(max_k):
+    for k in range(max_k): # k : frequency domain
         for n in range(N):
             X_real[k] += fx[n] * math.cos(2 * pi * k * n / N)
             X_imaginary[k] += fx[n] * -math.sin(2 * pi * k * n / N)
