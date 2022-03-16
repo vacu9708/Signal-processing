@@ -10,7 +10,7 @@
 A discrete time Fourier transform is performed to analyze a signal in the frequency domain with a computer.
 
 ![image](https://user-images.githubusercontent.com/67142421/155689010-f04e9a51-ccba-4951-81d2-6346de16f5fc.png)
-![image](https://user-images.githubusercontent.com/67142421/155687366-75207445-8ab9-49fe-9505-6c11786e877f.png)<br>
+![image](https://user-images.githubusercontent.com/67142421/158687851-e2ff15c5-a65a-4e61-8a31-a5d3585f9b2c.png)<br>
 The first index of an array is 0. That's why the last index is N-1.
 * The infinitesimal dt is 1 because it is discrete time.
 * n(sample) corresponds to t(time).
