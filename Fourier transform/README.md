@@ -213,8 +213,8 @@ sound = wave.open('Guitar strings/1st E string', 'r')
 signal = sound.readframes(-1)
 signal = np.frombuffer(signal, dtype=int)
 
-sampling_frequency = sound.getframerate() #2**15 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
-sample_buffer_size = 2**15
+sampling_frequency = sound.getframerate() 46000Hz in this file
+sample_buffer_size = 2**14 # For real-time detection
 fx = np.zeros(sample_buffer_size)
 
 for n in range(sample_buffer_size):
@@ -248,5 +248,5 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/67142421/155848726-c0dc0b03-fedb-4295-9f6d-0d60ef41438d.png)
 ![image](https://user-images.githubusercontent.com/67142421/155848706-20983ffc-9f2b-4412-94db-524cad96c3d1.png)
 ## Output ( 1st E string in standard guitar tuning)
-![image](https://user-images.githubusercontent.com/67142421/158676348-ecfe744d-fcf8-45d5-8155-1f1dad3ee511.png)
+![image](https://user-images.githubusercontent.com/67142421/158679809-ffdbb7c9-f427-428d-a825-54293f2a10a5.png)
 
