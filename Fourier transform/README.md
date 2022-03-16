@@ -213,7 +213,7 @@ sound = wave.open('Guitar strings/1st E string', 'r')
 signal = sound.readframes(-1)
 signal = np.frombuffer(signal, dtype=int)
 
-sampling_frequency = sound.getframerate() 46000Hz in this file
+sampling_frequency = sound.getframerate() 48000Hz in this sound file
 sample_buffer_size = 2**14 # For real-time detection
 fx = np.zeros(sample_buffer_size)
 
