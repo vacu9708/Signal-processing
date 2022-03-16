@@ -11,6 +11,7 @@ A discrete time Fourier transform is performed to analyze a signal in the freque
 
 ![image](https://user-images.githubusercontent.com/67142421/155689010-f04e9a51-ccba-4951-81d2-6346de16f5fc.png)
 ![image](https://user-images.githubusercontent.com/67142421/155687366-75207445-8ab9-49fe-9505-6c11786e877f.png)<br>
+The first index of an array is 0. That's why the last index is N-1.
 * The infinitesimal dt is 1 because it is discrete time.
 * n(sample) corresponds to t(time).
 * k corresponds to f (k'th frequency in the frequency domain)
@@ -100,7 +101,8 @@ plt.show()
 
 ## How to derive FFT
 ![image](https://user-images.githubusercontent.com/67142421/158342808-af6c272c-cce6-41de-999a-8af8bb85acfd.png)
-### In other words : ![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)
+### Therefore : ![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)<br>
+The divide and conquer method can be applied with this result to increase the speed.
 
 ### [Click -> The time complexity of Divide and conquer method](https://github.com/vacu9708/Algorithm/tree/main/Sorting%20algorithm/Merge%20sort)
 ![image](https://user-images.githubusercontent.com/67142421/158434546-9356c400-3682-473c-8223-27e143b6099c.png)
@@ -138,7 +140,7 @@ def absolute_complex_array(complex_array): # Converting complex numbers to real 
 def FFT(fx):
     N = len(fx) # N has to be a power of 2 for FFT.
 
-    if N == 1:
+    if N == 1: # Applying the fourier transform to a function whose size is 0 makes the original function.
         return np.array([Complex_number(fx[0], 0)])
     
     X_even = FFT(fx[::2]) # Fourier transformed function of the signal at even indices
@@ -150,22 +152,22 @@ def FFT(fx):
 
     X_left = np.array([Complex_number for i in range(N//2)])
     X_right = np.array([Complex_number for i in range(N//2)])
-    for n in range(N//2):
-        X_left[n] = X_even[n] + X_odd[n] * e[n]
-        X_right[n] = X_even[n] + X_odd[n] * e[N//2 + n]
+    for k in range(N//2):
+        X_left[k] = X_even[k] + X_odd[k] * e[k]
+        X_right[k] = X_even[k] + X_odd[k] * e[N//2 + k] # N/2 + k is equal to k because N/2 is one period in X_even and X_odd.
     X = np.concatenate((X_left, X_right))
 
     return X
     '''Also works
     e = np.array([Complex_number for i in range(N//2)])
     for k in range(N//2):
-        e[k] = Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N)) * X_odd[n]
+        e[k] = Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N))
 
     X_left = np.array([Complex_number for i in range(N//2)])
     X_right = np.array([Complex_number for i in range(N//2)])
-    for n in range(N//2):
-        X_left[n] = X_even[n] + e[n]
-        X_right[n] = X_even[n] - e[n]'''
+    for k in range(N//2):
+        X_left[k] = X_even[k] + e[k] * X_odd[n]
+        X_right[k] = X_even[k] - e[k] * X_odd[n]'''
 
 def FFT2(fx):
     N = len(fx) # N has to be a power of 2 for FFT.
@@ -206,7 +208,6 @@ frequency_domain = np.arange(0, max_frequency, frequency_resolution)
 #-----
 
 X = absolute_complex_array(FFT(fx)) / (len(fx)/2)
-#X = abs(FFT2(fx))
 X = X[:len(fx)//2]
 
 print('Elapsed time : ',time.time() - start_time)
