@@ -106,7 +106,6 @@ plt.show()
 The divide and conquer method can be applied with this result to increase the speed.
 
 ### [Click -> The time complexity of Divide and conquer method](https://github.com/vacu9708/Algorithm/tree/main/Sorting%20algorithm/Merge%20sort)
-![image](https://user-images.githubusercontent.com/67142421/158434546-9356c400-3682-473c-8223-27e143b6099c.png)
 
 ~~~Python
 import time
