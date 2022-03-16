@@ -69,7 +69,8 @@ signal_frequency = [2.5, 4.5]
 for n in range(sample_buffer_size):
     # n/sampling_frequency : Time taken per sample
     fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
-#-----
+
+# sample_buffer_size/sampling_frequency : Total time taken for sampling
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), fx)
 plt.xlabel('Time')
 plt.ylabel('Amplitude')
@@ -219,6 +220,7 @@ fx = np.zeros(sample_buffer_size)
 for n in range(sample_buffer_size):
     fx[n] = signal[n]
 
+# sample_buffer_size/sampling_frequency : Total time taken for sampling
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), fx)
 plt.xlabel('Time')
 plt.ylabel('Amplitude')
