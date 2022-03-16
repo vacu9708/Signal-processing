@@ -182,21 +182,43 @@ def FFT2(fx):
 
     e = np.exp(-2j*pi*np.arange(N) / N)
     X = np.concatenate( (X_even + e[:N//2] * X_odd, X_even + e[N//2:] * X_odd) )
-    
-    #e = np.exp(-2j*pi*np.arange(N//2) / N)
-    #X = np.concatenate( (X_even + e * X_odd, X_even - e * X_odd) )
 
     return X
 
+def find_main_frequency(X):
+    # Find the max and second max frequency
+    index_max = 0
+    for i in range(int(1000/frequency_resolution)):
+        if X[i] > X[index_max]:
+            index_max = i
+    #-----
+    proportional_distribution = 1 / (X[index_max-1]+X[index_max]+X[index_max+1])
+    frequency1 = X[index_max-1] * proportional_distribution * (index_max-1)
+    frequency2 = X[index_max] * proportional_distribution * index_max
+    frequency3 = X[index_max+1] * proportional_distribution * (index_max+1)
+    main_frequency = (frequency1+frequency2+frequency3)*frequency_resolution
+
+    print('Main frequency : {}'.format(main_frequency))
+
+    '''
+    index_second_max = (index_max-1) if X[index_max-1] > X[index_max+1] else (index_max+1)
+    proportional_distribution = 1 / (X[index_max]+X[index_second_max])
+    frequency1 = X[index_max] * proportional_distribution * (index_max)
+    frequency2 = X[index_second_max] * proportional_distribution * index_second_max
+    main_frequency_with_2_values = (frequency1+frequency2)*frequency_resolution
+    print('Main frequency with 2 values : {}'.format(main_frequency_with_2_values))'''
+
 # Sampling
-sampling_frequency = (2**11)*0.5 #2**15 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
-sample_buffer_size = 2**11
+sound = wave.open('Guitar strings/1st E string', 'r')
+signal = sound.readframes(-1)
+signal = np.frombuffer(signal, dtype=int)
+
+sampling_frequency = sound.getframerate() #2**15 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
+sample_buffer_size = 2**15
 fx = np.zeros(sample_buffer_size)
 
-signal_frequency = [2.5, 4.5]
 for n in range(sample_buffer_size):
-    # n/sampling_frequency : Time taken per 1 sampling
-    fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
+    fx[n] = signal[n]
 
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), fx)
 plt.xlabel('Time')
@@ -212,6 +234,8 @@ frequency_domain = np.arange(0, max_frequency, frequency_resolution)
 X = absolute_complex_array(FFT(fx)) / (len(fx)/2)
 X = X[:len(fx)//2]
 
+find_main_frequency(X)
+
 print('Elapsed time : ',time.time() - start_time)
 #plt.plot(frequency_domain, X)
 plt.stem(frequency_domain, X, 'b', markerfmt=" ", basefmt="-b")
@@ -223,3 +247,6 @@ plt.show()
 ## Output ( f(x) = sin(2t) + 2sin(4.5t) )
 ![image](https://user-images.githubusercontent.com/67142421/155848726-c0dc0b03-fedb-4295-9f6d-0d60ef41438d.png)
 ![image](https://user-images.githubusercontent.com/67142421/155848706-20983ffc-9f2b-4412-94db-524cad96c3d1.png)
+## Output ( 1st E string in standard guitar tuning)
+![image](https://user-images.githubusercontent.com/67142421/158676348-ecfe744d-fcf8-45d5-8155-1f1dad3ee511.png)
+
