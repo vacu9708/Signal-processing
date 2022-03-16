@@ -37,27 +37,6 @@ start_time = time.time()
 
 pi = np.pi
 
-# Sampling
-sample_buffer_size = 2**11
-sampling_frequency = (2**11)*0.5 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
-fx = np.zeros(sample_buffer_size)
-
-signal_frequency = [2.5, 4.5]
-for n in range(sample_buffer_size):
-    fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
-#-----
-plt.plot(np.arange(sample_buffer_size), fx)
-plt.xlabel('Time')
-plt.ylabel('Amplitude')
-plt.figure()
-#-----
-# Frequency domain
-frequency_resolution = sampling_frequency/sample_buffer_size
-max_frequency = sampling_frequency / 2
-frequency_domain = np.arange(0, max_frequency, frequency_resolution)
-max_k = int(max_frequency / frequency_resolution)
-#-----
-
 def DFT2(fx): # Using matrix
     N = len(fx)
     n = np.arange(N)
@@ -80,6 +59,28 @@ def DFT(fx):
         X[k] = math.sqrt(X_real[k]**2 + X_imaginary[k]**2) # Pythagorean theorem (|X|)
 
     return X / (N / 2) # # Divide X by N to prevent the amplitude from being too big(Normalization)
+
+# Sampling
+sample_buffer_size = 2**11
+sampling_frequency = (2**11)*0.5 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
+fx = np.zeros(sample_buffer_size)
+
+signal_frequency = [2.5, 4.5]
+for n in range(sample_buffer_size):
+    # n/sampling_frequency : Time taken per sample
+    fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
+#-----
+plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), fx)
+plt.xlabel('Time')
+plt.ylabel('Amplitude')
+plt.figure()
+#-----
+# Frequency domain
+frequency_resolution = sampling_frequency/sample_buffer_size
+max_frequency = sampling_frequency / 2
+frequency_domain = np.arange(0, max_frequency, frequency_resolution)
+max_k = int(max_frequency / frequency_resolution)
+#-----
 
 X = DFT(fx)
 
@@ -112,6 +113,7 @@ import time
 from matplotlib import pyplot as plt
 import numpy as np
 import math
+import wave
 
 start_time = time.time()
 
@@ -187,8 +189,8 @@ def FFT2(fx):
     return X
 
 # Sampling
-sample_buffer_size = 2**12
-sampling_frequency = (2**12)*0.5 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
+sampling_frequency = (2**11)*0.5 #2**15 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
+sample_buffer_size = 2**11
 fx = np.zeros(sample_buffer_size)
 
 signal_frequency = [2.5, 4.5]
