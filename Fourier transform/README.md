@@ -15,7 +15,7 @@
 ![image](https://user-images.githubusercontent.com/67142421/158805992-cf16d1f5-26db-4bb8-9379-aabcd485be32.png)<br>
 
 > Expression (1) can be expressed as series by the Riemann sum.<br>
->This expression means integrating the underlined **function whose domain is comprised of frequencies with respect to k, which is a frequency**.<br>
+>This expression means integrating the underlined **function, whose domain is comprised of frequencies, with respect to k(frequency)**.<br>
 >That is to say, the underlined expression is the very ***Fourier transform*** that we were looking for.<br>
 
 ## Fourier transform (Angular frequency ω = 2πf)
