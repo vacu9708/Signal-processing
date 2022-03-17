@@ -1,9 +1,9 @@
 # Fourier transform
 ![image](https://user-images.githubusercontent.com/67142421/155687402-a9ae5d4a-9baa-4a83-ac6e-b504ebf805df.png)
 >A Fourier transform is a method to find the frequencies of a function. The time domain is transformed to a frequency domain.<br>
->The Fourier transform makes a frequency domain expressed as complex numbers, so they need to be converted to real numbers through the Pythagorean theorem.
+>The Fourier transform makes a frequency domain expressed as complex numbers, so they need to be converted to real numbers to see the real value through the Pythagorean theorem.
 
-## The Fourier transform is derived from the Fourier series.
+## [The Fourier transform is derived from the Fourier series](https://github.com/vacu9708/Signal-processing/tree/main/Fourier%20series)
 ![image](https://user-images.githubusercontent.com/67142421/158811827-513af3b1-0dfb-4319-a7d8-6c2ffa9b5688.png)<br>
 >We know that (1/T) is a frequency. When T apporaches infinity, (1/T) becomes an infinitesimal frequency.<br>
 > Let infinitesimal frequency **(1/T) be dk** and n'th frequency **(n/T) be k**.
