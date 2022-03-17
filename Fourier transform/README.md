@@ -4,9 +4,8 @@
 >The Fourier transform makes a frequency domain expressed as complex numbers, so they need to be converted to real numbers through the Pythagorean theorem.
 
 ## The Fourier transform is derived from the Fourier series.
-![image](https://user-images.githubusercontent.com/67142421/158802787-e974b67b-853c-4574-a308-cd2736ba5ac7.png)<br>
+![image](https://user-images.githubusercontent.com/67142421/158811827-513af3b1-0dfb-4319-a7d8-6c2ffa9b5688.png)<br>
 >We know that (1/T) is a frequency. When T apporaches infinity, (1/T) becomes an infinitesimal frequency.<br>
-> This can be expressed as series by the Riemann sum.<br>
 > Let infinitesimal frequency **(1/T) be dk** and n'th frequency **(n/T) be k**.
 
 ![image](https://user-images.githubusercontent.com/67142421/158805467-fbd0db34-250a-43fa-8201-ed9b040fcc8b.png)
@@ -15,9 +14,9 @@
 
 ![image](https://user-images.githubusercontent.com/67142421/158805992-cf16d1f5-26db-4bb8-9379-aabcd485be32.png)<br>
 
-This expression means integrating **the underlined function whose domain is comprised of frequencies**.
-That is to say, the underlined expression is the very ***Fourier transform*** that we were looking for.
-
+> Expression (1) can be expressed as series by the Riemann sum.<br>
+>This expression means integrating the underlined **function whose domain is comprised of frequencies with respect to k, which is a frequency**.<br>
+>That is to say, the underlined expression is the very ***Fourier transform*** that we were looking for.<br>
 
 ## Fourier transform (Angular frequency ω = 2πf)
 ![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
