@@ -219,7 +219,7 @@ def FFT2(fx):
     return X
 
 def find_main_frequency(X):
-    # Find the maxfrequency
+    # Find the max frequency
     index_max = 0
     for i in range(int(1000/frequency_resolution)):
         if X[i] > X[index_max]:
