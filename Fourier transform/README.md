@@ -124,6 +124,42 @@ The divide and conquer method can be applied with this result to increase the sp
 ### [Click -> The time complexity of Divide and conquer method](https://github.com/vacu9708/Algorithm/tree/main/Sorting%20algorithm/Merge%20sort)
 
 ~~~Python
+import time
+from matplotlib import pyplot as plt
+import numpy as np
+import math
+import wave
+
+start_time = time.time()
+
+pi = np.pi
+
+class Complex_number:
+    def __init__(self, real, imaginary):
+        self.real = real
+        self.imaginary = imaginary
+    
+    def __add__(self, b):
+        return Complex_number(self.real + b.real, self.imaginary + b.imaginary)
+    
+    def __sub__(self, b):
+        return Complex_number(self.real - b.real, self.imaginary - b.imaginary)
+    
+    def __mul__(self, b):
+        return Complex_number(self.real * b.real - self.imaginary * b.imaginary, self.real * b.imaginary + self.imaginary * b.real)
+
+def throw_imaginary(complex_array):
+    result = np.zeros(len(complex_array))
+    for i in range(len(complex_array)):
+        result[i] = complex_array[i].real
+    return result
+
+def absolute_complex_array(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
+    result = np.zeros(len(complex_array))
+    for i in range(len(complex_array)):
+        result[i] = math.sqrt(complex_array[i].real**2 + complex_array[i].imaginary**2)
+    return result
+
 def FFT(fx):
     N = len(fx) # N has to be a power of 2 for FFT.
 
@@ -181,11 +217,90 @@ def FFT2(fx):
     X = np.concatenate( (X_even + e[:N//2] * X_odd, X_even + e[N//2:] * X_odd) )
 
     return X
+
+def find_main_frequency(X):
+    # Find the maxfrequency
+    index_max = 0
+    for i in range(int(1000/frequency_resolution)):
+        if X[i] > X[index_max]:
+            index_max = i
+    #-----
+    proportional_distribution = 1 / (X[index_max-1]+X[index_max]+X[index_max+1])
+    frequency1 = X[index_max-1] * proportional_distribution * (index_max-1)
+    frequency2 = X[index_max] * proportional_distribution * index_max
+    frequency3 = X[index_max+1] * proportional_distribution * (index_max+1)
+    main_frequency = (frequency1+frequency2+frequency3)*frequency_resolution
+
+    print('\n\nMain frequency : {}'.format(main_frequency))
+
+    
+    '''index_second_max = (index_max-1) if X[index_max-1] > X[index_max+1] else (index_max+1)
+    proportional_distribution = 1 / (X[index_max]+X[index_second_max])
+    frequency1 = X[index_max] * proportional_distribution * (index_max)
+    frequency2 = X[index_second_max] * proportional_distribution * index_second_max
+    main_frequency_with_2_values = (frequency1+frequency2)*frequency_resolution
+    print('Main frequency with 2 values : {}'.format(main_frequency_with_2_values))'''
+
+# Sampling
+sound = wave.open('Guitar strings/1st E string.wav', 'r')
+signal = sound.readframes(-1)
+signal = np.frombuffer(signal, dtype=int)
+
+sampling_frequency = sound.getframerate()
+sample_buffer_size = 2**14
+fx = np.zeros(sample_buffer_size)
+
+for n in range(sample_buffer_size):
+    fx[n] = signal[n]
+
+plt.title('Sampled signal')
+plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), fx)
+plt.xlabel('Time')
+plt.ylabel('Amplitude')
+plt.figure()
+#-----
+# Frequency domain
+frequency_resolution = sampling_frequency/sample_buffer_size
+max_frequency = sampling_frequency / 2
+frequency_domain = np.arange(0, max_frequency, frequency_resolution)
+#-----
+
+complex_X = FFT(fx)
+X = absolute_complex_array(complex_X) / len(fx)
+find_main_frequency(X)
+
+# Plot the frequency domain
+plt.title('Frequency domain')
+plt.plot(frequency_domain, X[:len(fx)//2])
+#plt.stem(frequency_domain, X[:len(fx)//2], 'b', markerfmt=" ", basefmt="-b")
+plt.xlabel('Frequency(Hz)')
+plt.ylabel('Amplitude')
+plt.figure()
+#-----
+# Eliminating the main frequency and performing a inverse fourier transform.
+# Find the maxfrequency
+index_max = 0
+for i in range(int(1000/frequency_resolution)):
+    if X[i] > X[index_max]:
+        index_max = i
+#-----
+# Eliminating the frequency that has the biggest amplitude.
+complex_X[index_max-1] = Complex_number(0,0)
+complex_X[index_max] = Complex_number(0,0)
+complex_X[index_max+1] = Complex_number(0,0)
+#-----
+inverse_X = throw_imaginary(inverse_FFT(complex_X)) / len(fx) # inverse fourier transform.
+
+plt.title('Modified signal')
+plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), inverse_X)
+plt.xlabel('Time')
+plt.ylabel('Amplitude')
+print('Elapsed time : ',time.time() - start_time)
+plt.show()
 ~~~
 
 ## Output ( f(x) = sin(2t) + 2sin(4.5t) )
 ![image](https://user-images.githubusercontent.com/67142421/155848726-c0dc0b03-fedb-4295-9f6d-0d60ef41438d.png)
 ![image](https://user-images.githubusercontent.com/67142421/155848706-20983ffc-9f2b-4412-94db-524cad96c3d1.png)
 ## Output ( 1st E string in standard guitar tuning)
-![image](https://user-images.githubusercontent.com/67142421/158679809-ffdbb7c9-f427-428d-a825-54293f2a10a5.png)
-
+![Uploading image.png…]()
