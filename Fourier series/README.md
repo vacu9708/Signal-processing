@@ -1,7 +1,7 @@
 ![image](https://user-images.githubusercontent.com/67142421/154940640-606a5587-61af-45b3-809f-b1b455b6f237.png)
 
 # Fourier series
->Fourier series starts from the fact that all periodic functions can be expressed as the sum of trigonometric functions.
+>Fourier series starts from the idea that all periodic functions can be expressed as the sum of trigonometric functions.
 >Various shapes of function can be made with Fourier series.
 
 ## How to derive fourier series
