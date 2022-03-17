@@ -64,24 +64,24 @@ def DFT2(fx): # Using matrix
 
 def DFT(fx):
     N = len(fx) # Number of sampling
-    X = np.zeros(max_k) # Fourier transformed function
-    X_real = np.zeros(max_k)
-    X_imaginary = np.zeros(max_k)
+    X = np.zeros(N//2) # Fourier transformed function
+    X_real = np.zeros(N//2)
+    X_imaginary = np.zeros(N//2)
 
-    for k in range(max_k): # k : frequency domain
+    for k in range(N//2): # k : frequency domain
         for n in range(N):
             X_real[k] += fx[n] * math.cos(2 * pi * k * n / N)
             X_imaginary[k] += fx[n] * -math.sin(2 * pi * k * n / N)
         X[k] = math.sqrt(X_real[k]**2 + X_imaginary[k]**2) # Pythagorean theorem (|X|)
 
-    return X / (N / 2) # # Divide X by N to prevent the amplitude from being too big(Normalization)
+    return X / N # Divide X by N to prevent the amplitude from being too big (Normalization)
 
 # Sampling
 sample_buffer_size = 2**11
 sampling_frequency = (2**11)*0.5 # 0.5Hz of frequency resolution. This will take 2 seconds to fill the sample buffer.
 fx = np.zeros(sample_buffer_size)
 
-signal_frequency = [2.5, 4.5]
+signal_frequency = [2.5, 5]
 for n in range(sample_buffer_size):
     # n/sampling_frequency : Time taken per sample
     fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
@@ -96,16 +96,15 @@ plt.figure()
 frequency_resolution = sampling_frequency/sample_buffer_size
 max_frequency = sampling_frequency / 2
 frequency_domain = np.arange(0, max_frequency, frequency_resolution)
-max_k = int(max_frequency / frequency_resolution)
 #-----
 
 X = DFT(fx)
 
-print('Elapsed time : ',time.time() - start_time)
 #plt.plot(frequency_domain, X)
 plt.stem(frequency_domain, X, 'b', markerfmt=" ", basefmt="-b")
 plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
+print('Elapsed time : ',time.time() - start_time)
 plt.show()
 ~~~
 
