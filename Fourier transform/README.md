@@ -305,7 +305,7 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/67142421/155848706-20983ffc-9f2b-4412-94db-524cad96c3d1.png)
 ## Output ( 1st E string in standard guitar tuning)
 ![image](https://user-images.githubusercontent.com/67142421/158881884-d25706ca-9e13-4007-9230-d5622c4760d5.png)
-## Signal modified by an inverse fourier transform (After eliminating the main frequency)
+## An inverse fourier transform after modifying the signal (After eliminating the main frequency)
 ![image](https://user-images.githubusercontent.com/67142421/158883908-8c25e482-d883-4425-ab2e-152c8daf9dae.png)
 
 ![image](https://user-images.githubusercontent.com/67142421/158881956-2dfe675b-cb48-4ce2-a227-33aa4597511d.png)
