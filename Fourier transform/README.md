@@ -18,6 +18,7 @@
 >This expression means integrating the underlined **function, whose domain is comprised of frequencies, with respect to k(frequency)**.<br>
 >That is to say, the underlined expression is the very ***Fourier transform*** that we were looking for.<br>
 >Also, we can find out the **Inverse Fourier Transform** in this expression. Doing the Fourier transform of a fourier transformed function again converts the frequency domain to a time domain back.
+* An inverse fourier transform of a signal after converting a transfomred signal to absolute values makes a wrong output.
 
 ## Fourier transform (Angular frequency ω = 2πf)
 ![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
@@ -163,7 +164,7 @@ def absolute_complex_array(complex_array): # Converting complex numbers to real 
 def FFT(fx):
     N = len(fx) # N has to be a power of 2 for FFT.
 
-    if N == 1: # Applying the fourier transform to a function whose size is 0 makes the original function.
+    if N == 1: # The fourier transform of a function whose size is 0 makes the original signal.
         return np.array([Complex_number(fx[0], 0)])
     
     X_even = FFT(fx[::2]) # Fourier transformed function of the signal at even indices
@@ -182,10 +183,10 @@ def FFT(fx):
 
     return X
 
-def inverse_FFT(fx): # The fourier inverse transform of real numbers makes a wrong output.
+def inverse_FFT(fx): # The inverse fourier transform of a signal that have become absolute values makes a wrong output.
     N = len(fx) # N has to be a power of 2 for FFT.
 
-    if N == 1: # Applying the fourier transform to a function whose size is 0 makes the original function.
+    if N == 1: # The fourier transform of a signal whose size is 0 makes the original signal.
         return fx # Has to be a complex number
     
     X_even = inverse_FFT(fx[::2]) # Fourier transformed function of the signal at even indices
