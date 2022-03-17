@@ -284,12 +284,12 @@ for i in range(int(1000/frequency_resolution)):
     if X[i] > X[index_max]:
         index_max = i
 #-----
-# Eliminating the frequency that has the biggest amplitude.
+# Eliminating the main frequency
 complex_X[index_max-1] = Complex_number(0,0)
 complex_X[index_max] = Complex_number(0,0)
 complex_X[index_max+1] = Complex_number(0,0)
 #-----
-inverse_X = throw_imaginary(inverse_FFT(complex_X)) / len(fx) # inverse fourier transform.
+inverse_X = throw_imaginary(inverse_FFT(complex_X)) / len(fx) # Inverse fourier transform.
 
 plt.title('Modified signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), inverse_X)
