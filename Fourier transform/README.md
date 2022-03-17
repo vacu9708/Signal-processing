@@ -124,36 +124,6 @@ The divide and conquer method can be applied with this result to increase the sp
 ### [Click -> The time complexity of Divide and conquer method](https://github.com/vacu9708/Algorithm/tree/main/Sorting%20algorithm/Merge%20sort)
 
 ~~~Python
-import time
-from matplotlib import pyplot as plt
-import numpy as np
-import math
-import wave
-
-start_time = time.time()
-
-pi = np.pi
-
-class Complex_number:
-    def __init__(self, real, imaginary):
-        self.real = real
-        self.imaginary = imaginary
-    
-    def __add__(self, b):
-        return Complex_number(self.real + b.real, self.imaginary + b.imaginary)
-    
-    def __sub__(self, b):
-        return Complex_number(self.real - b.real, self.imaginary - b.imaginary)
-    
-    def __mul__(self, b):
-        return Complex_number(self.real * b.real - self.imaginary * b.imaginary, self.real * b.imaginary + self.imaginary * b.real)
-
-def absolute_complex_array(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
-    result = np.zeros(len(complex_array))
-    for i in range(len(complex_array)):
-        result[i] = math.sqrt(complex_array[i].real**2 + complex_array[i].imaginary**2)
-    return result
-
 def FFT(fx):
     N = len(fx) # N has to be a power of 2 for FFT.
 
@@ -165,7 +135,7 @@ def FFT(fx):
 
     e = np.array([Complex_number for i in range(N)])
     for k in range(N):
-        e[k] = Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N))
+        e[k] = Complex_number(math.cos(2*pi*k / N), -math.sin(2*pi*k / N))
 
     X_left = np.array([Complex_number for i in range(N//2)])
     X_right = np.array([Complex_number for i in range(N//2)])
@@ -175,16 +145,28 @@ def FFT(fx):
     X = np.concatenate((X_left, X_right))
 
     return X
-    '''Also works
-    e = np.array([Complex_number for i in range(N//2)])
-    for k in range(N//2):
-        e[k] = Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N))
+
+def inverse_FFT(fx): # The fourier inverse transform of real numbers makes a wrong output.
+    N = len(fx) # N has to be a power of 2 for FFT.
+
+    if N == 1: # Applying the fourier transform to a function whose size is 0 makes the original function.
+        return fx # Has to be a complex number
+    
+    X_even = inverse_FFT(fx[::2]) # Fourier transformed function of the signal at even indices
+    X_odd = inverse_FFT(fx[1::2]) # at odd indices
+
+    e = np.array([Complex_number for i in range(N)])
+    for k in range(N):
+        e[k] = Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N)) # The minus that was on the sin changes to plus
 
     X_left = np.array([Complex_number for i in range(N//2)])
     X_right = np.array([Complex_number for i in range(N//2)])
     for k in range(N//2):
-        X_left[k] = X_even[k] + e[k] * X_odd[n]
-        X_right[k] = X_even[k] - e[k] * X_odd[n]'''
+        X_left[k] = X_even[k] + X_odd[k] * e[k]
+        X_right[k] = X_even[k] + X_odd[k] * e[N//2 + k] # N/2 + k is equal to k because N/2 is one period in X_even and X_odd.
+    X = np.concatenate((X_left, X_right))
+
+    return X
 
 def FFT2(fx):
     N = len(fx) # N has to be a power of 2 for FFT.
@@ -199,65 +181,6 @@ def FFT2(fx):
     X = np.concatenate( (X_even + e[:N//2] * X_odd, X_even + e[N//2:] * X_odd) )
 
     return X
-
-def find_main_frequency(X):
-    # Find the max and second max frequency
-    index_max = 0
-    for i in range(int(1000/frequency_resolution)):
-        if X[i] > X[index_max]:
-            index_max = i
-    #-----
-    proportional_distribution = 1 / (X[index_max-1]+X[index_max]+X[index_max+1])
-    frequency1 = X[index_max-1] * proportional_distribution * (index_max-1)
-    frequency2 = X[index_max] * proportional_distribution * index_max
-    frequency3 = X[index_max+1] * proportional_distribution * (index_max+1)
-    main_frequency = (frequency1+frequency2+frequency3)*frequency_resolution
-
-    print('Main frequency : {}'.format(main_frequency))
-
-    '''
-    index_second_max = (index_max-1) if X[index_max-1] > X[index_max+1] else (index_max+1)
-    proportional_distribution = 1 / (X[index_max]+X[index_second_max])
-    frequency1 = X[index_max] * proportional_distribution * (index_max)
-    frequency2 = X[index_second_max] * proportional_distribution * index_second_max
-    main_frequency_with_2_values = (frequency1+frequency2)*frequency_resolution
-    print('Main frequency with 2 values : {}'.format(main_frequency_with_2_values))'''
-
-# Sampling
-sound = wave.open('Guitar strings/1st E string', 'r')
-signal = sound.readframes(-1)
-signal = np.frombuffer(signal, dtype=int)
-
-sampling_frequency = sound.getframerate() 48000Hz in this sound file
-sample_buffer_size = 2**14 # For real-time detection
-fx = np.zeros(sample_buffer_size)
-
-for n in range(sample_buffer_size):
-    fx[n] = signal[n]
-
-# sample_buffer_size/sampling_frequency : Total time taken for sampling
-plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), fx)
-plt.xlabel('Time')
-plt.ylabel('Amplitude')
-plt.figure()
-#-----
-# Frequency domain
-frequency_resolution = sampling_frequency/sample_buffer_size
-max_frequency = sampling_frequency / 2
-frequency_domain = np.arange(0, max_frequency, frequency_resolution)
-#-----
-
-X = absolute_complex_array(FFT(fx)) / (len(fx)/2)
-X = X[:len(fx)//2]
-
-find_main_frequency(X)
-
-print('Elapsed time : ',time.time() - start_time)
-#plt.plot(frequency_domain, X)
-plt.stem(frequency_domain, X, 'b', markerfmt=" ", basefmt="-b")
-plt.xlabel('Frequency(Hz)')
-plt.ylabel('Amplitude')
-plt.show()
 ~~~
 
 ## Output ( f(x) = sin(2t) + 2sin(4.5t) )
