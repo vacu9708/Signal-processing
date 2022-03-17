@@ -12,6 +12,11 @@
 ## Making a square wave
 ![Deriving the fourier series of a square wave](https://user-images.githubusercontent.com/67142421/154939586-b14b9984-4fcd-4efc-a0a0-77ec0d4f5336.jpg)
 
+## Complex fourier series
+![KakaoTalk_20220317_215856927](https://user-images.githubusercontent.com/67142421/158814326-b5654d9b-5a70-4e6f-9be6-9e70cea4da9e.jpg)
+
+![KakaoTalk_20220317_220136668](https://user-images.githubusercontent.com/67142421/158814349-aa196cc3-d1d2-4b70-a8e2-563bbf1b57d5.jpg)
+
 ## Code
 ~~~Python
 import math
