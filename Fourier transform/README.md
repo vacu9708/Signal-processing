@@ -1,15 +1,30 @@
 # Fourier transform
 ![image](https://user-images.githubusercontent.com/67142421/155687402-a9ae5d4a-9baa-4a83-ac6e-b504ebf805df.png)
 >A Fourier transform is a method to find the frequencies of a function. The time domain is transformed to a frequency domain.<br>
->The amplitude of a frequency is a complex number, so it needs to be converted to a real number through Pythagorean theorem
+>The Fourier transform makes a frequency domain expressed as complex numbers, so they need to be converted to real numbers through the Pythagorean theorem.
 
-## Fourier transform (ω = 2πf)
-![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
+## The Fourier transform is derived from the Fourier series.
+![image](https://user-images.githubusercontent.com/67142421/158802787-e974b67b-853c-4574-a308-cd2736ba5ac7.png)<br>
+>We know that (1/T) is a frequency. When T apporaches infinity, (1/T) becomes an infinitesimal frequency.<br>
+> This can be expressed as series by the Riemann sum.<br>
+> Let infinitesimal frequency **(1/T) be dk** and n'th frequency **(n/T) be k**.
 
-## Discrete time Fourier Transform (Derived by Riemann sum integral from the Fourier Transform in continuous time)
-A discrete time Fourier transform is performed to analyze a signal in the frequency domain with a computer.
+![image](https://user-images.githubusercontent.com/67142421/158805467-fbd0db34-250a-43fa-8201-ed9b040fcc8b.png)
 
 ![image](https://user-images.githubusercontent.com/67142421/155689010-f04e9a51-ccba-4951-81d2-6346de16f5fc.png)
+
+![image](https://user-images.githubusercontent.com/67142421/158805992-cf16d1f5-26db-4bb8-9379-aabcd485be32.png)<br>
+
+This expression means integrating **the underlined function whose domain is comprised of frequencies**.
+That is to say, the underlined expression is the very ***Fourier transform*** that we were looking for.
+
+
+## Fourier transform (Angular frequency ω = 2πf)
+![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
+
+## Discrete time Fourier Transform
+>A discrete time Fourier transform is performed to analyze a signal in the frequency domain with a computer.
+
 ![image](https://user-images.githubusercontent.com/67142421/158687851-e2ff15c5-a65a-4e61-8a31-a5d3585f9b2c.png)<br>
 The first index of an array is 0. That's why the last index is N-1.
 * The infinitesimal dt is 1 because it is discrete time.
