@@ -164,12 +164,10 @@ def FFT(fx):
     for k in range(N):
         e[k] = Complex_number(math.cos(2*pi*k / N), -math.sin(2*pi*k / N))
 
-    X_left = np.array([Complex_number for i in range(N//2)])
-    X_right = np.array([Complex_number for i in range(N//2)])
+    X = np.array([Complex_number for i in range(N)])
     for k in range(N//2):
-        X_left[k] = X_even[k] + X_odd[k] * e[k]
-        X_right[k] = X_even[k] + X_odd[k] * e[N//2 + k] # N/2 + k is equal to k because N/2 is one period in X_even and X_odd.
-    X = np.concatenate((X_left, X_right))
+        X[k] = X_even[k] + X_odd[k] * e[k]
+        X[N//2 + k] = X_even[k] + X_odd[k] * e[N//2 + k] # N/2 + k is equal to k because N/2 is one period in X_even and X_odd.
 
     return X
 
@@ -186,12 +184,10 @@ def inverse_FFT(fx): # The inverse fourier transform of a signal that have becom
     for k in range(N):
         e[k] = Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N)) # The minus that was on the sin changes to plus
 
-    X_left = np.array([Complex_number for i in range(N//2)])
-    X_right = np.array([Complex_number for i in range(N//2)])
+    X = np.array([Complex_number for i in range(N)])
     for k in range(N//2):
-        X_left[k] = X_even[k] + X_odd[k] * e[k]
-        X_right[k] = X_even[k] + X_odd[k] * e[N//2 + k] # N/2 + k is equal to k because N/2 is one period in X_even and X_odd.
-    X = np.concatenate((X_left, X_right))
+        X[k] = X_even[k] + X_odd[k] * e[k]
+        X[N//2 + k] = X_even[k] + X_odd[k] * e[N//2 + k] # N/2 + k is equal to k because N/2 is one period in X_even and X_odd.
 
     return X
 
@@ -205,7 +201,7 @@ def FFT2(fx):
     X_odd = FFT2(fx[1::2]) # at odd indices
 
     e = np.exp(-2j*pi*np.arange(N) / N)
-    X = np.concatenate( (X_even + e[:N//2] * X_odd, X_even + e[N//2:] * X_odd) )
+    X = np.concatenate( (X_even + X_odd * e[:N//2], X_even + X_odd * e[N//2:]) )
 
     return X
 
