@@ -233,12 +233,12 @@ sound = wave.open('Guitar strings/1st E string.wav', 'r')
 signal = sound.readframes(-1)
 signal = np.frombuffer(signal, dtype=int)
 
-sampling_frequency = sound.getframerate()
-sample_buffer_size = 2**14
+sampling_frequency = 4800 (The default sampling frequency is 48000Hz. Decrease it for faster speed)
+sample_buffer_size = 2**11
 fx = np.zeros(sample_buffer_size)
 
 for n in range(sample_buffer_size):
-    fx[n] = signal[n]
+    fx[n] = signal[n * (sound.getframerate()//sampling_frequency)]
 
 plt.title('Sampled signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), fx)
@@ -290,7 +290,7 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/67142421/155848726-c0dc0b03-fedb-4295-9f6d-0d60ef41438d.png)
 ![image](https://user-images.githubusercontent.com/67142421/155848706-20983ffc-9f2b-4412-94db-524cad96c3d1.png)
 ## Output ( 1st E string in standard guitar tuning)
-![image](https://user-images.githubusercontent.com/67142421/158881884-d25706ca-9e13-4007-9230-d5622c4760d5.png)
+![image](https://user-images.githubusercontent.com/67142421/159037509-04a0ac4b-a5b2-42b6-aaf2-13b0c1ece52f.png)
 ## Inverse fourier transform after modifying the signal (After eliminating the main frequency)
 ![image](https://user-images.githubusercontent.com/67142421/158883908-8c25e482-d883-4425-ab2e-152c8daf9dae.png)
 
