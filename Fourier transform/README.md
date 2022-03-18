@@ -205,28 +205,23 @@ def FFT2(fx):
 
     return X
 
-def find_main_frequency(X):
-    # Find the max frequency
+def find_main_frequency(X, frequency_resolution):
+    # Find the max and second max frequency
     index_max = 0
-    for i in range(int(1000/frequency_resolution)):
+    second_max = 0
+    for i in range(1, int(1000/frequency_resolution)):
         if X[i] > X[index_max]:
+            second_max = index_max
             index_max = i
     #-----
-    proportional_distribution = 1 / (X[index_max-1]+X[index_max]+X[index_max+1])
-    frequency1 = X[index_max-1] * proportional_distribution * (index_max-1)
-    frequency2 = X[index_max] * proportional_distribution * index_max
-    frequency3 = X[index_max+1] * proportional_distribution * (index_max+1)
+    i_main_freq = index_max if index_max < second_max else second_max # Find the main frequency
+
+    proportional_distribution = 1 / (X[i_main_freq-1]+X[i_main_freq]+X[i_main_freq+1])
+    frequency1 = X[i_main_freq-1] * proportional_distribution * (i_main_freq-1)
+    frequency2 = X[i_main_freq] * proportional_distribution * i_main_freq
+    frequency3 = X[i_main_freq+1] * proportional_distribution * (i_main_freq+1)
     main_frequency = (frequency1+frequency2+frequency3)*frequency_resolution
-
-    print('\n\nMain frequency : {}'.format(main_frequency))
-
-    
-    '''index_second_max = (index_max-1) if X[index_max-1] > X[index_max+1] else (index_max+1)
-    proportional_distribution = 1 / (X[index_max]+X[index_second_max])
-    frequency1 = X[index_max] * proportional_distribution * (index_max)
-    frequency2 = X[index_second_max] * proportional_distribution * index_second_max
-    main_frequency_with_2_values = (frequency1+frequency2)*frequency_resolution
-    print('Main frequency with 2 values : {}'.format(main_frequency_with_2_values))'''
+    return main_frequency
 
 # Sampling
 sound = wave.open('Guitar strings/1st E string.wav', 'r')
@@ -253,8 +248,9 @@ frequency_domain = np.arange(0, max_frequency, frequency_resolution)
 #-----
 
 complex_X = FFT(fx)
-X = absolute_complex_array(complex_X) #/ len(fx)
-find_main_frequency(X)
+X = absolute_complex_array(complex_X) / len(fx)
+main_frequency = find_main_frequency(X, frequency_resolution)
+print('\n\nMain frequency : {}'.format(main_frequency))
 
 # Plot the frequency domain
 plt.title('Frequency domain')
@@ -276,7 +272,7 @@ complex_X[index_max-1] = Complex_number(0,0)
 complex_X[index_max] = Complex_number(0,0)
 complex_X[index_max+1] = Complex_number(0,0)
 #-----
-inverse_X = remove_imaginary(inverse_FFT(complex_X)) #/ len(fx) # Inverse fourier transform.
+inverse_X = remove_imaginary(inverse_FFT(complex_X)) / len(fx) # Inverse fourier transform.
 
 plt.title('Modified signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), inverse_X)
