@@ -253,7 +253,7 @@ frequency_domain = np.arange(0, max_frequency, frequency_resolution)
 #-----
 
 complex_X = FFT(fx)
-X = absolute_complex_array(complex_X) / len(fx)
+X = absolute_complex_array(complex_X) #/ len(fx)
 find_main_frequency(X)
 
 # Plot the frequency domain
@@ -276,7 +276,7 @@ complex_X[index_max-1] = Complex_number(0,0)
 complex_X[index_max] = Complex_number(0,0)
 complex_X[index_max+1] = Complex_number(0,0)
 #-----
-inverse_X = remove_imaginary(inverse_FFT(complex_X)) / len(fx) # Inverse fourier transform.
+inverse_X = remove_imaginary(inverse_FFT(complex_X)) #/ len(fx) # Inverse fourier transform.
 
 plt.title('Modified signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), inverse_X)
