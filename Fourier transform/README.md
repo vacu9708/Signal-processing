@@ -233,7 +233,7 @@ sound = wave.open('Guitar strings/1st E string.wav', 'r')
 signal = sound.readframes(-1)
 signal = np.frombuffer(signal, dtype=int)
 
-sampling_frequency = 4800 (The default sampling frequency is 48000Hz. Decrease it for faster speed)
+sampling_frequency = 4800 # The default sampling frequency is 48000Hz. Decrease it for faster speed
 sample_buffer_size = 2**11
 fx = np.zeros(sample_buffer_size)
 
