@@ -53,15 +53,6 @@ start_time = time.time()
 
 pi = np.pi
 
-def DFT2(fx): # Using matrix
-    N = len(fx)
-    n = np.arange(N)
-    k = frequency_domain.reshape((max_k, 1))
-    e = np.exp(-2j * pi * k * n / N)
-    fx = fx.reshape((N, 1))
-    X = np.dot(e, fx) # Dot product
-    return abs(X) # Pythagorean theorem'''
-
 def DFT(fx):
     N = len(fx) # Number of sampling
     X = np.zeros(N//2) # Fourier transformed function
