@@ -148,7 +148,7 @@ class Complex_number:
     def __mul__(self, b):
         return Complex_number(self.real * b.real - self.imaginary * b.imaginary, self.real * b.imaginary + self.imaginary * b.real)
 
-def throw_imaginary(complex_array):
+def remove_imaginary(complex_array):
     result = np.zeros(len(complex_array))
     for i in range(len(complex_array)):
         result[i] = complex_array[i].real
@@ -289,7 +289,7 @@ complex_X[index_max-1] = Complex_number(0,0)
 complex_X[index_max] = Complex_number(0,0)
 complex_X[index_max+1] = Complex_number(0,0)
 #-----
-inverse_X = throw_imaginary(inverse_FFT(complex_X)) / len(fx) # Inverse fourier transform.
+inverse_X = remove_imaginary(inverse_FFT(complex_X)) / len(fx) # Inverse fourier transform.
 
 plt.title('Modified signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), inverse_X)
