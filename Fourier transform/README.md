@@ -18,7 +18,6 @@
 >This expression means integrating the underlined **function, whose domain is comprised of frequencies, with respect to k(frequency)**.<br>
 >That is to say, the underlined expression is the very ***Fourier transform*** that we were looking for.<br>
 >Also, we can find out the **Inverse Fourier Transform** in this expression. Doing the Fourier transform of a fourier transformed function again converts the frequency domain to a time domain back.
-* An inverse fourier transform of a signal after converting a transformed signal to absolute values makes a wrong output.
 
 ## Fourier transform (Angular frequency ω = 2πf)
 ![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
@@ -45,7 +44,7 @@ The first index of an array is 0. That's why the last index is N-1.
 * The values on the right side of the niquist frequency are mirror values, which have the opposite sign, either (+) or (-)
 
 ### The type of number on each domain
-* Frequency domain after a fourier transform : **Real numbers with all the imaginary numbers being 0**
+* Frequency domain after a fourier transform : **Complex numbers**
 * Time domain after an inverse fourier transform : **Imaginary numbers with all the real numbers being 0**
 
 ~~~Python
@@ -150,7 +149,7 @@ class Complex_number:
     def __mul__(self, b):
         return Complex_number(self.real * b.real - self.imaginary * b.imaginary, self.real * b.imaginary + self.imaginary * b.real)
 
-def remove_imaginary(complex_array):
+def get_real(complex_array):
     result = np.zeros(len(complex_array))
     for i in range(len(complex_array)):
         result[i] = complex_array[i].real
@@ -283,7 +282,7 @@ complex_X[index_max-1] = Complex_number(0,0)
 complex_X[index_max] = Complex_number(0,0)
 complex_X[index_max+1] = Complex_number(0,0)
 #-----
-inverse_X = remove_imaginary(inverse_FFT(complex_X)) / len(fx) # Inverse fourier transform.
+inverse_X = get_real(inverse_FFT(complex_X)) / len(fx) # Inverse fourier transform.
 
 plt.title('Modified signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), inverse_X)
