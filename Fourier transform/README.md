@@ -43,6 +43,10 @@ The first index of an array is 0. That's why the last index is N-1.
   >it will take longer to fill the buffer if we desire increased resolution.
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
 
+### The type of number on each domain
+* Frequency domain after a fourier transform : **Real numbers with all the imaginary numbers being 0**
+* Time domain after an inverse fourier transform : **Imaginary numbers with all the real numbers being 0**
+
 ~~~Python
 import time
 from matplotlib import pyplot as plt
@@ -76,7 +80,13 @@ signal_frequency = [2.5, 5]
 for n in range(sample_buffer_size):
     # n/sampling_frequency : Time taken per sample
     fx[n] = math.sin(2*pi*signal_frequency[0]*(n/sampling_frequency)) + 2*math.sin(2*pi*signal_frequency[1]*(n/sampling_frequency))
-
+'''Square wave
+for n in range(sample_buffer_size):
+    for i in range(9999):
+        coefficient = 1 / (2*i+1)
+        square_wave[n] += coefficient * math.sin( np.pi*(2*i+1)*(n/sampling_frequency) )'''
+#-----
+# Plot the sampled signal
 # sample_buffer_size/sampling_frequency : Total time taken for sampling
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), fx)
 plt.xlabel('Time')
