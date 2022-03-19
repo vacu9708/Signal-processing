@@ -42,6 +42,7 @@ The first index of an array is 0. That's why the last index is N-1.
   >The frequency resolution can be increased by either reducing the sampling frequency or increasing the size of the sample buffer, which means
   >it will take longer to fill the buffer if we desire increased resolution.
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
+* The values on the right side of the niquist frequency are mirror values, which have the opposite sign, either (+) or (-)
 
 ### The type of number on each domain
 * Frequency domain after a fourier transform : **Real numbers with all the imaginary numbers being 0**
