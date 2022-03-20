@@ -84,7 +84,7 @@ for n in range(sample_buffer_size):
 for n in range(sample_buffer_size):
     for i in range(9999):
         coefficient = 1 / (2*i+1)
-        square_wave[n] += coefficient * math.sin( np.pi*(2*i+1)*(n/sampling_frequency) )'''
+        square_wave[n] += coefficient * math.sin( 2*np.pi*(2*i+1)*(n/sampling_frequency) )'''
 #-----
 # Plot the sampled signal
 # sample_buffer_size/sampling_frequency : Total time taken for sampling
