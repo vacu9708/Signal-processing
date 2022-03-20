@@ -43,12 +43,6 @@ The first index of an array is 0. That's why the last index is N-1.
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
 * The values on the right side of the niquist frequency are mirror frequencies, which have the opposite sign in the imaginary number.
 
-### The type of number on each domain
-* Frequency domain after a fourier transform : complex numbers
-* Time domain after an inverse fourier transform : real numbers
-
-
-
 ~~~Python
 import time
 from matplotlib import pyplot as plt
@@ -151,26 +145,33 @@ class Complex_number:
     def __mul__(self, b):
         return Complex_number(self.real * b.real - self.imaginary * b.imaginary, self.real * b.imaginary + self.imaginary * b.real)
 
-def get_real(complex_array):
+    def __truediv__(self, b):
+        return Complex_number(self.real / b, self.imaginary / b)
+
+    def show(self):
+        print(self.real, self.imaginary, math.sqrt(self.real**2+self.imaginary**2))
+
+def absolute_IFFT(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
     result = np.zeros(len(complex_array))
     for i in range(len(complex_array)):
-        result[i] = complex_array[i].real
+        sign = -1 if complex_array[i].real + complex_array[i].imaginary < 0 else 1
+        result[i] = math.sqrt(complex_array[i].real**2 + complex_array[i].imaginary**2) * sign
     return result
 
-def absolute_complex_array(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
+def absolute_FFT(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
     result = np.zeros(len(complex_array))
     for i in range(len(complex_array)):
         result[i] = math.sqrt(complex_array[i].real**2 + complex_array[i].imaginary**2)
     return result
 
-def FFT(fx):
-    N = len(fx) # N has to be a power of 2 for FFT.
+def FFT(signal):
+    N = len(signal) # N has to be a power of 2 for FFT.
 
     if N == 1: # The fourier transform of a function whose size is 0 makes the original signal.
-        return np.array([Complex_number(fx[0], 0)])
+        return np.array([Complex_number(signal[0], 0)])
     
-    X_even = FFT(fx[::2]) # Fourier transformed function of the signal at even indices
-    X_odd = FFT(fx[1::2]) # at odd indices
+    X_even = FFT(signal[::2]) # Fourier transformed function of the signal at even indices
+    X_odd = FFT(signal[1::2]) # at odd indices
 
     e = np.array([Complex_number for i in range(N)])
     for k in range(N):
@@ -183,14 +184,14 @@ def FFT(fx):
 
     return X
 
-def inverse_FFT(fx): # The inverse fourier transform of a signal that have become absolute values makes a wrong output.
-    N = len(fx) # N has to be a power of 2 for FFT.
+def inverse_FFT(signal): # The inverse fourier transform of a signal that have become absolute values makes a wrong output.
+    N = len(signal) # N has to be a power of 2 for FFT.
 
     if N == 1: # The fourier transform of a signal whose size is 0 makes the original signal.
-        return fx # Has to be a complex number
+        return signal # Has to be a complex number
     
-    X_even = inverse_FFT(fx[::2]) # Fourier transformed function of the signal at even indices
-    X_odd = inverse_FFT(fx[1::2]) # at odd indices
+    X_even = inverse_FFT(signal[::2]) # Fourier transformed function of the signal at even indices
+    X_odd = inverse_FFT(signal[1::2]) # at odd indices
 
     e = np.array([Complex_number for i in range(N)])
     for k in range(N):
@@ -203,14 +204,14 @@ def inverse_FFT(fx): # The inverse fourier transform of a signal that have becom
 
     return X
 
-def FFT2(fx):
-    N = len(fx) # N has to be a power of 2 for FFT.
+def FFT2(signal):
+    N = len(signal) # N has to be a power of 2 for FFT.
 
     if N == 1:
-        return fx
+        return signal
     
-    X_even = FFT2(fx[::2]) # FFT of the signal at even indices
-    X_odd = FFT2(fx[1::2]) # at odd indices
+    X_even = FFT2(signal[::2]) # FFT of the signal at even indices
+    X_odd = FFT2(signal[1::2]) # at odd indices
 
     e = np.exp(-2j*pi*np.arange(N) / N)
     X = np.concatenate( (X_even + X_odd * e[:N//2], X_even + X_odd * e[N//2:]) )
@@ -236,22 +237,15 @@ def find_main_frequency(X, frequency_resolution):
     return main_frequency
 
 # Sampling
-sound = wave.open('Guitar strings/1st E string.wav', 'r')
-signal = sound.readframes(-1)
-signal = np.frombuffer(signal, dtype=int)
+raw_sound = wave.open('Sound/E string.wav', 'r')
+sound = raw_sound.readframes(-1)
+sound = np.frombuffer(sound, dtype=int)
 
-sampling_frequency = 4800 # The default sampling frequency is 48000Hz. Decrease it for faster speed
-sample_buffer_size = 2**11
-fx = np.zeros(sample_buffer_size)
-
+sampling_frequency = 24000 # The default sampling frequency is 48000Hz. Decrease it for faster speed
+sample_buffer_size = 2**15
+signal = np.zeros(sample_buffer_size)
 for n in range(sample_buffer_size):
-    fx[n] = signal[n * (sound.getframerate()//sampling_frequency)]
-
-plt.title('Sampled signal')
-plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), fx)
-plt.xlabel('Time')
-plt.ylabel('Amplitude')
-plt.figure()
+    signal[n] = sound[n * (raw_sound.getframerate()//sampling_frequency)]
 #-----
 # Frequency domain
 frequency_resolution = sampling_frequency/sample_buffer_size
@@ -259,32 +253,40 @@ max_frequency = sampling_frequency / 2
 frequency_domain = np.arange(0, max_frequency, frequency_resolution)
 #-----
 
-complex_X = FFT(fx)
-X = absolute_complex_array(complex_X) / len(fx)
-main_frequency = find_main_frequency(X, frequency_resolution)
+X = FFT(signal) / sample_buffer_size
+absolute_X = absolute_FFT(X)
+main_frequency = find_main_frequency(absolute_X, frequency_resolution)
 print('\n\nMain frequency : {}'.format(main_frequency))
+
+# Eliminating the main frequency and performing an inverse FFT.
+# Find the max frequency
+index_max = 0
+for i in range(int(1000/frequency_resolution)):
+    if absolute_X[i] > absolute_X[index_max]:
+        index_max = i
+#-----
+# Eliminate the main frequency
+X[index_max-1] = Complex_number(0,0)
+X[index_max] = Complex_number(0,0)
+X[index_max+1] = Complex_number(0,0)
+#-----
+#-----
+inverse_X = absolute_IFFT(inverse_FFT(X))
+
+
+plt.title('Sampled signal')
+plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), signal)
+plt.xlabel('Time')
+plt.ylabel('Amplitude')
+plt.figure()
 
 # Plot the frequency domain
 plt.title('Frequency domain')
-plt.plot(frequency_domain, X[:len(fx)//2])
-#plt.stem(frequency_domain, X[:len(fx)//2], 'b', markerfmt=" ", basefmt="-b")
+#plt.plot(frequency_domain, absolute_X[:len(signal)//2])
+plt.stem(frequency_domain, absolute_X[:sample_buffer_size//2], 'b', markerfmt=" ", basefmt="-b")
 plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.figure()
-#-----
-# Eliminating the main frequency and performing a inverse fourier transform.
-# Find the maxfrequency
-index_max = 0
-for i in range(int(1000/frequency_resolution)):
-    if X[i] > X[index_max]:
-        index_max = i
-#-----
-# Eliminating the main frequency
-complex_X[index_max-1] = Complex_number(0,0)
-complex_X[index_max] = Complex_number(0,0)
-complex_X[index_max+1] = Complex_number(0,0)
-#-----
-inverse_X = get_real(inverse_FFT(complex_X)) / len(fx) # Inverse fourier transform.
 
 plt.title('Modified signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), inverse_X)
