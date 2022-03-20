@@ -37,15 +37,17 @@ The first index of an array is 0. That's why the last index is N-1.
 ### Characteristics
 * Maximum frequency limit = sampling frequency / 2
 * Frequency resolution 
-  >Frequency resolution = sampling frequency / sample buffer size<br>
+  >Frequency resolution = sampling frequency / number of data (For example : recording 2 seconds gives 0.5Hz resolution, recording 10 seconds gives 0.1Hz resolution. <br>
   >The frequency resolution can be increased by either reducing the sampling frequency or increasing the size of the sample buffer, which means
   >it will take longer to fill the buffer if we desire increased resolution.
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
-* The values on the right side of the niquist frequency are mirror values, which have the opposite sign, either (+) or (-)
+* The values on the right side of the niquist frequency are mirror frequencies, which have the opposite sign in the imaginary number.
 
 ### The type of number on each domain
-* Frequency domain after a fourier transform : **Complex numbers**
-* Time domain after an inverse fourier transform : **Imaginary numbers with all the real numbers being 0**
+* Frequency domain after a fourier transform : complex numbers
+* Time domain after an inverse fourier transform : real numbers
+
+
 
 ~~~Python
 import time
