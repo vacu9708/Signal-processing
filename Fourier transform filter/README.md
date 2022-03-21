@@ -130,7 +130,7 @@ modified_X = absolute_FFT(X)
 
 inverse_X = absolute_IFFT(inverse_FFT(X))
 
-# Save the result. Before saving, we want to convert back to '<i2' bytes:
+# Save the audios
 wavs = [wave.open('./Sound/Voice with noise.wav', 'w'), wave.open('./Sound/Voice with noise gotten rid of.wav', 'w')]
 wavs[0].setparams(raw_sound.getparams())
 wavs[0].writeframes(signal.astype(np.int32).tobytes())
@@ -138,6 +138,15 @@ wavs[0].close()
 wavs[1].setparams(raw_sound.getparams())
 wavs[1].writeframes(inverse_X.astype(np.int32).tobytes())
 wavs[1].close()
+#-----
+# Play the sound
+py_audio = pyaudio.PyAudio()
+stream = py_audio.open(output=True,
+            channels=1,
+            rate=int(sampling_frequency),
+            format=pyaudio.paInt32,
+            )
+stream.write(inverse_X.astype(np.int32).tobytes())
 #-----
 
 plt.title('Sampled signal')
