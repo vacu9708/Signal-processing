@@ -32,7 +32,7 @@ class Complex_number:
 raw_sound = wave.open('Sound/Recording.wav', 'r')
 sound = raw_sound.readframes(-1)
 sound = np.frombuffer(sound, dtype=int)
-print(raw_sound.getparams())
+
 def noise(amplitude):   
     return random.randint(-amplitude, amplitude)
 
