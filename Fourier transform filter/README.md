@@ -32,21 +32,22 @@ class Complex_number:
 raw_sound = wave.open('Sound/Recording.wav', 'r')
 sound = raw_sound.readframes(-1)
 sound = np.frombuffer(sound, dtype=int)
+#print(raw_sound.getparams())
 
 def noise(amplitude):   
     return random.randint(-amplitude, amplitude)
 
-sampling_frequency = 2**15
-sample_buffer_size = 2**17
+'''sampling_frequency = 2**13
+sample_buffer_size = 2**15
 signal = np.zeros(sample_buffer_size)
 for n in range(sample_buffer_size):
-    signal[n] = 10**9*math.sin(2*pi*300*(n/sampling_frequency)) + noise(10**9)
+    signal[n] = 10**9*math.sin(2*pi*300*(n/sampling_frequency)) + noise(10**9)'''
 
-'''sampling_frequency = 48000
+sampling_frequency = 48000
 sample_buffer_size = 2**18
 signal = np.zeros(sample_buffer_size)
 for n in range(raw_sound.getnframes()):
-    signal[n] = sound[n * (raw_sound.getframerate()//sampling_frequency)] + noise(10**8)'''
+    signal[n] = sound[n * (raw_sound.getframerate()//sampling_frequency)] + noise(10**8)
 #-----
 # Frequency domain
 frequency_resolution = sampling_frequency/sample_buffer_size
@@ -111,6 +112,7 @@ def frequency_filter(X, max_freq):
     for i in range(int((max_freq+1)/frequency_resolution), int(sample_buffer_size/2)):
         X[i] = Complex_number(0,0)
         X[sample_buffer_size-i] = Complex_number(0,0)
+    X[int(sample_buffer_size/2)] = Complex_number(0,0)
 
 def threshold_filter(X, threshold):
     absolute_X = absolute_FFT(X)
@@ -121,6 +123,7 @@ def threshold_filter(X, threshold):
 X = FFT(signal) / (sample_buffer_size)
 absolute_X = absolute_FFT(X)
 frequency_filter(X, 3*10**3)
+threshold_filter(X, 2.1*10**5)
 #threshold_filter(X, 1*10**7)
 absolute_modified_X = absolute_FFT(X)
 
@@ -129,14 +132,14 @@ inverse_X = absolute_IFFT(inverse_FFT(X))
 # Save the audios
 wavs = [wave.open('./Sound/Sound with noise.wav', 'w'), wave.open('./Sound/Sound with the noise removed.wav', 'w')]
 for wav in wavs:
-    wav.setparams(raw_sound.getparams())
-    #wav.setframerate(sampling_frequency)
-    #wav.setnframes(sample_buffer_size)
-    #wav.setnchannels(1)
-    #wav.setsampwidth(4)
-wavs[0].writeframes(signal.astype(np.float32).tobytes())
+    #wav.setparams(raw_sound.getparams())
+    wav.setframerate(sampling_frequency/2)
+    wav.setsampwidth(4)
+    wav.setnframes(sample_buffer_size)
+    wav.setnchannels(2)
+wavs[0].writeframes(signal.astype(np.int32).tobytes())
 wavs[0].close()
-wavs[1].writeframes(inverse_X.astype(np.float32).tobytes())
+wavs[1].writeframes(inverse_X.astype(np.int32).tobytes())
 wavs[1].close()
 #-----
 
@@ -147,7 +150,7 @@ stream = py_audio.open(output=True,
             rate=int(sampling_frequency),
             format=pyaudio.paInt32,
             )
-stream.write(inverse_X.astype(np.float32).tobytes())
+stream.write(inverse_X.astype(np.int32).tobytes())
 #-----
 
 plt.title('Sampled signal')
