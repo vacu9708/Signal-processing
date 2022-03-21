@@ -43,6 +43,12 @@ The first index of an array is 0. That's why the last index is N-1.
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
 * The values on the right side of the niquist frequency are mirror frequencies, which have the opposite sign in the imaginary number.
 
+### Frequency shift
+Frequency Shift, or Modulation)
+* Multiplying exp(-j2πf0t) in the time domain is the same as shifting f0. >> exp(j2πf0t) x(t) = X(f-f0)
+*cos(2πf0t) x(t) = 1/2 [ X(f-f0) + X(f+f0) ]<br>
+*sin(2πf0t) x(t) =  1/2j [ X(f-f0) - X(f+f0) ]<br>
+
 ~~~Python
 import time
 from matplotlib import pyplot as plt
