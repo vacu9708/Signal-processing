@@ -154,17 +154,13 @@ class Complex_number:
     def __truediv__(self, b):
         return Complex_number(self.real / b, self.imaginary / b)
 
-    def show(self):
-        print(self.real, self.imaginary, math.sqrt(self.real**2+self.imaginary**2))
-
-def absolute_IFFT(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
+def get_real(complex_array):
     result = np.zeros(len(complex_array))
     for i in range(len(complex_array)):
-        sign = -1 if complex_array[i].real + complex_array[i].imaginary < 0 else 1
-        result[i] = math.sqrt(complex_array[i].real**2 + complex_array[i].imaginary**2) * sign
+        result[i] = complex_array[i].real
     return result
 
-def absolute_FFT(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
+def absolute_complex_array(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
     result = np.zeros(len(complex_array))
     for i in range(len(complex_array)):
         result[i] = math.sqrt(complex_array[i].real**2 + complex_array[i].imaginary**2)
@@ -226,14 +222,18 @@ def FFT2(signal):
 
 def find_main_frequency(X, frequency_resolution):
     # Find the max and second max frequency
-    index_max = 0
-    second_max = 0
-    for i in range(1, int(1000/frequency_resolution)):
-        if X[i] > X[index_max]:
-            second_max = index_max
-            index_max = i
+    sum = 0
+    average = 0
+    i_local_max = 1
+    for i in range(1, sample_buffer_size//2):
+        sum += X[i]
+        average = sum / i
+        if X[i] < X[i+1] and X[i+1] > X[i+2]: # If a local max has been found
+            if X[i+1] > average*20: # If the local max is much bigger than the average so far
+                i_main_freq = i+1 # Determine the index of the main frequency
+                break
     #-----
-    i_main_freq = index_max if index_max < second_max else second_max # Find the main frequency
+    #i_main_freq = index_max if index_max < second_max else second_max # Find the main frequency
 
     proportional_distribution = 1 / (X[i_main_freq-1]+X[i_main_freq]+X[i_main_freq+1])
     frequency1 = X[i_main_freq-1] * proportional_distribution * (i_main_freq-1)
@@ -243,14 +243,15 @@ def find_main_frequency(X, frequency_resolution):
     return main_frequency
 
 # Sampling
-raw_sound = wave.open('Sound/E string.wav', 'r')
+raw_sound = wave.open('Sound/G string.wav', 'r')
 sound = raw_sound.readframes(-1)
 sound = np.frombuffer(sound, dtype=int)
 
-sampling_frequency = 24000 # The default sampling frequency is 48000Hz. Decrease it for faster speed
+sampling_frequency = 4800 # The default sampling frequency is 48000Hz. Decrease it for faster speed
 sample_buffer_size = 2**15
 signal = np.zeros(sample_buffer_size)
-for n in range(sample_buffer_size):
+
+for n in range(int(sampling_frequency/2)):
     signal[n] = sound[n * (raw_sound.getframerate()//sampling_frequency)]
 #-----
 # Frequency domain
@@ -259,8 +260,8 @@ max_frequency = sampling_frequency / 2
 frequency_domain = np.arange(0, max_frequency, frequency_resolution)
 #-----
 
-X = FFT(signal) / sample_buffer_size
-absolute_X = absolute_FFT(X)
+X = FFT(signal) / sample_buffer_size #/ 2)
+absolute_X = absolute_complex_array(X) / sample_buffer_size
 main_frequency = find_main_frequency(absolute_X, frequency_resolution)
 print('\n\nMain frequency : {}'.format(main_frequency))
 
@@ -277,8 +278,7 @@ X[index_max] = Complex_number(0,0)
 X[index_max+1] = Complex_number(0,0)
 #-----
 #-----
-inverse_X = absolute_IFFT(inverse_FFT(X))
-
+inverse_X = get_real(inverse_FFT(X))
 
 plt.title('Sampled signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), signal)
