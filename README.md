@@ -8,3 +8,4 @@
 * [Median filter](https://github.com/vacu9708/Signal-processing/blob/main/Median%20filter)
 * [Fourier series](https://github.com/vacu9708/Signal-processing/tree/main/Fourier%20series)
 * [Fourier transform](https://github.com/vacu9708/Signal-processing/tree/main/Fourier%20transform)
+* [Fourier transform filter](https://github.com/vacu9708/Signal-processing/tree/main/Fourier%20transform%20filter)
