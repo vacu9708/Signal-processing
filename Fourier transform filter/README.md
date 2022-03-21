@@ -38,15 +38,15 @@ def noise():
 sample_buffer_size = 2**15
 signal = np.zeros(sample_buffer_size)'''
 
-'''for n in range(sample_buffer_size):
-    signal[n] = 10**9*math.sin(2*pi*300*(n/sampling_frequency)) + noise() # same as analogRead'''
+for n in range(sample_buffer_size):
+    signal[n] = 10**9*math.sin(2*pi*300*(n/sampling_frequency)) + noise()
 
-sampling_frequency = 48000
+'''sampling_frequency = 48000
 sample_buffer_size = 2**18
 signal = np.zeros(sample_buffer_size)
 
 for n in range(raw_sound.getnframes()):
-    signal[n] = sound[n * (raw_sound.getframerate()//sampling_frequency)] + noise()
+    signal[n] = sound[n * (raw_sound.getframerate()//sampling_frequency)] + noise()'''
 #-----
 
 def absolute_IFFT(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
