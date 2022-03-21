@@ -31,22 +31,31 @@ class Complex_number:
         print(self.real, self.imaginary, math.sqrt(self.real**2+self.imaginary**2))'''
 
 # Sampling
+raw_sound = wave.open('Sound/Recording.wav', 'r')
+sound = raw_sound.readframes(-1)
+sound = np.frombuffer(sound, dtype=int)
+
 def noise():   
-    return random.randint(-10**9, 10**9)
+    return random.randint(-10**8, 10**8)
 
 '''sampling_frequency = 2**14
 sample_buffer_size = 2**15
 signal = np.zeros(sample_buffer_size)'''
 
-for n in range(sample_buffer_size):
-    signal[n] = 10**9*math.sin(2*pi*300*(n/sampling_frequency)) + noise()
+'''for n in range(sample_buffer_size):
+    signal[n] = 10**9*math.sin(2*pi*300*(n/sampling_frequency)) + noise() # same as analogRead'''
 
-'''sampling_frequency = 48000
+sampling_frequency = 48000
 sample_buffer_size = 2**18
 signal = np.zeros(sample_buffer_size)
 
 for n in range(raw_sound.getnframes()):
-    signal[n] = sound[n * (raw_sound.getframerate()//sampling_frequency)] + noise()'''
+    signal[n] = sound[n * (raw_sound.getframerate()//sampling_frequency)] + noise()
+#-----
+# Frequency domain
+frequency_resolution = sampling_frequency/sample_buffer_size
+max_frequency = sampling_frequency #/ 2
+frequency_domain = np.arange(0, max_frequency, frequency_resolution)
 #-----
 
 def absolute_IFFT(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
@@ -115,19 +124,20 @@ def threshold_filter(X, threshold):
 
 X = FFT(signal) / (sample_buffer_size)
 absolute_X = absolute_FFT(X)
-#frequency_filter(X, 4*10**3) # To get rid of the noise of the recorded voice
-threshold_filter(X, 5*10**7)
+frequency_filter(X, 3*10**3)
+#threshold_filter(X, 4*10**5)
+modified_X = absolute_FFT(X)
 
 inverse_X = absolute_IFFT(inverse_FFT(X))
 
-# Play the sound
-py_audio = pyaudio.PyAudio()
-stream = py_audio.open(output=True,
-            channels=1,
-            rate=int(sampling_frequency),
-            format=pyaudio.paInt32,
-            )
-stream.write(inverse_X.astype(np.int32).tobytes())
+# Save the result. Before saving, we want to convert back to '<i2' bytes:
+wavs = [wave.open('./Sound/Voice with noise.wav', 'w'), wave.open('./Sound/Voice with noise gotten rid of.wav', 'w')]
+wavs[0].setparams(raw_sound.getparams())
+wavs[0].writeframes(signal.astype(np.int32).tobytes())
+wavs[0].close()
+wavs[1].setparams(raw_sound.getparams())
+wavs[1].writeframes(inverse_X.astype(np.int32).tobytes())
+wavs[1].close()
 #-----
 
 plt.title('Sampled signal')
@@ -136,10 +146,15 @@ plt.xlabel('Time')
 plt.ylabel('Amplitude')
 plt.figure()
 
-# Plot the frequency domain
 plt.title('Frequency domain')
 #plt.plot(frequency_domain, absolute_X[:len(signal)//2])
 plt.stem(frequency_domain, absolute_X, 'b', markerfmt=" ", basefmt="-b")
+plt.xlabel('Frequency(Hz)')
+plt.ylabel('Amplitude')
+plt.figure()
+
+plt.title('Modified frequency domain')
+plt.stem(frequency_domain, modified_X, 'b', markerfmt=" ", basefmt="-b")
 plt.xlabel('Frequency(Hz)')
 plt.ylabel('Amplitude')
 plt.figure()
