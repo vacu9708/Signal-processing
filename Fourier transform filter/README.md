@@ -1,5 +1,5 @@
 # Fourier transform filter
->Fourier transform and Inverse fourier transform is going to be used to get rid of the noise here.
+>Fourier transform and Inverse fourier transform are going to be used to get rid of the noise here.
 
 ~~~Python
 from matplotlib import pyplot as plt
