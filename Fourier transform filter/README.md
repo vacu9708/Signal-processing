@@ -1,5 +1,6 @@
 # Fourier transform filter
 >Fourier transform and Inverse fourier transform are going to be used to get rid of the noise here.
+>The noise will be gotten rid of in the frequency domain, and then be inverse fourier transformed into the time domain.
 
 ~~~Python
 from matplotlib import pyplot as plt
