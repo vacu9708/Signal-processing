@@ -31,27 +31,22 @@ class Complex_number:
         print(self.real, self.imaginary, math.sqrt(self.real**2+self.imaginary**2))'''
 
 # Sampling
-'''raw_sound = wave.open('Sound/Recording.wav', 'r')
-sound = raw_sound.readframes(-1)
-sound = np.frombuffer(sound, dtype=int)'''
-
 def noise():   
     return random.randint(-10**9, 10**9)
 
-sampling_frequency = 2**10 #48000
-sample_buffer_size = 2**11 #2**17
+'''sampling_frequency = 2**14
+sample_buffer_size = 2**15
+signal = np.zeros(sample_buffer_size)'''
+
+'''for n in range(sample_buffer_size):
+    signal[n] = 10**9*math.sin(2*pi*300*(n/sampling_frequency)) + noise() # same as analogRead'''
+
+sampling_frequency = 48000
+sample_buffer_size = 2**18
 signal = np.zeros(sample_buffer_size)
 
-for n in range(sample_buffer_size):
-    signal[n] = 10**9*math.sin(2*pi*300*(n/sampling_frequency)) + noise() # same as analogRead
-
-'''for n in range(raw_sound.getnframes()):
-    signal[n] = sound[n * (raw_sound.getframerate()//sampling_frequency)]'''
-#-----
-# Frequency domain
-frequency_resolution = sampling_frequency/sample_buffer_size
-max_frequency = sampling_frequency #/ 2
-frequency_domain = np.arange(0, max_frequency, frequency_resolution)
+for n in range(raw_sound.getnframes()):
+    signal[n] = sound[n * (raw_sound.getframerate()//sampling_frequency)] + noise()
 #-----
 
 def absolute_IFFT(complex_array): # Converting complex numbers to real numbers through Pythagorean theorem
