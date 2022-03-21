@@ -115,7 +115,7 @@ def threshold_filter(X, threshold):
 
 X = FFT(signal) / (sample_buffer_size)
 absolute_X = absolute_FFT(X)
-#frequency_filter(X, 7000)
+#frequency_filter(X, 4*10**3) # To get rid of the noise of the recorded voice
 threshold_filter(X, 5*10**7)
 
 inverse_X = absolute_IFFT(inverse_FFT(X))
