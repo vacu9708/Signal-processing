@@ -15,7 +15,7 @@ double Ki = 0.5, Kd = 0.5;
 double P, I, D, PID_control;
 double desired_angle = 10, current_angle;
 double error, error_prev = 0, de;
-double time_prev = time.time(), dt; // dt is only needed for the theory with calculus, it's not needed actually in real life
+double time_prev = time.time(), dt; // dt is only needed theoretically, it is actually not needed in real life
 
 void PID_control() {
   /*
