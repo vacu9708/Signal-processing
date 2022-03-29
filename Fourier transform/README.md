@@ -50,6 +50,7 @@ Frequency Shift, or Modulation
 * cos(2πf0t) x(t) = 1/2 [ X(f-f0) + X(f+f0) ]
 * sin(2πf0t) x(t) =  1/2j [ X(f-f0) - X(f+f0) ]
 
+## Implementing the Discrete Fourier Transform in Python (The output is at the very bottom.)
 ~~~Python
 import time
 from matplotlib import pyplot as plt
