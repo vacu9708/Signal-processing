@@ -228,7 +228,7 @@ def inverse_FFT(signal): # The inverse fourier transform of a signal that have b
 
     return X
 
-def FFT2(signal):
+def FFT2(signal): # Makes the same output as the FFT above.
     N = len(signal) # N has to be a power of 2 for FFT.
 
     if N == 1:
