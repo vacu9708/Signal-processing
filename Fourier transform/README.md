@@ -18,7 +18,7 @@
 > Expression (1) can be expressed back as an integral from the Riemann sum.<br>
 >This expression means integrating the underlined **function, whose domain is comprised of frequencies, with respect to k(frequency)**.<br>
 >That is to say, the underlined expression has frequencies as its domain, which means it is the very ***Fourier transform*** that we were looking for.<br>
->Also, we can find out the **Inverse Fourier Transform** in this expression. Doing the Fourier transform of a fourier transformed function again converts the frequency domain to a time domain back.
+>Also, we can find out the **Inverse Fourier Transform** in this expression. Doing the similar calculation in a fourier transformed function converts the frequency domain to a time domain back.
 
 ## Fourier transform (Angular frequency ω = 2πf)
 ![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
