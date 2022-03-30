@@ -30,12 +30,12 @@ def fx(x, k):
         y += ( 4 * k / (math.pi * (2 * n - 1)) ) * math.sin((2 * n - 1) * x)
     return y
 
-fourier_series = []
+fourier_series_of_square_wave = []
 for x in range(-333, 333):
-    fourier_series.append(fx(x * 0.1, 2))
+    fourier_series_of_square_wave.append(fx(x * 0.1, 2))
 
 x = numpy.array(range(-333, 333))
-pyplot.plot(x, fourier_series)
+pyplot.plot(x, fourier_series_of_square_wave)
 #pyplot.legend()
 pyplot.show()
 ~~~
