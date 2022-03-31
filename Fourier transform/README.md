@@ -13,7 +13,7 @@
 
 ![image](https://user-images.githubusercontent.com/67142421/155689010-f04e9a51-ccba-4951-81d2-6346de16f5fc.png)
 
-## Fourier Transform and Inverse Fourier Transform
+## The derived result : Fourier Transform and Inverse Fourier Transform
 ![image](https://user-images.githubusercontent.com/67142421/158805992-cf16d1f5-26db-4bb8-9379-aabcd485be32.png)<br>
 
 > Expression (1) can be expressed back as an integral from the Riemann sum.<br>
