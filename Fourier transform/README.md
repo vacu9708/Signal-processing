@@ -192,7 +192,7 @@ def absolute_FFT(complex_array): # Converting complex numbers to real numbers th
 def FFT(signal):
     N = len(signal) # N has to be a power of 2 for FFT.
 
-    if N == 1: # The fourier transform of a function whose size is 0 makes the original signal.
+    if N == 1: # The fourier transform of a function whose size is 1 makes the original signal.
         return np.array([Complex_number(signal[0], 0)])
     
     X_even = FFT(signal[::2]) # Fourier transformed function of the signal at even indices
