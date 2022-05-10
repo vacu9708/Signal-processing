@@ -288,13 +288,13 @@ stream = py_audio.open(output=True,
 stream.write(inverse_X.astype(np.int32))
 #-----
 
+-----Plot
 plt.title('Sampled signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), signal)
 plt.xlabel('Time')
 plt.ylabel('Amplitude')
 plt.figure()
 
-# Plot the frequency domain
 plt.title('Frequency domain')
 #plt.plot(frequency_domain, absolute_X[:len(signal)//2])
 plt.stem(frequency_domain, absolute_X, 'b', markerfmt=" ", basefmt="-b")
