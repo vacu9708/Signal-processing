@@ -1,3 +1,5 @@
+<meta name="google-site-verification" content="nrOobyUoslWeNsafQbneSXSrFu-aU7ckZ-LwiT7ChVY" />
+
 # Fourier transform
 ![image](https://user-images.githubusercontent.com/67142421/155687402-a9ae5d4a-9baa-4a83-ac6e-b504ebf805df.png)
 >A Fourier transform is a method to find the frequencies of a function. The time domain is transformed to a frequency domain.<br>
