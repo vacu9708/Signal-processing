@@ -6,10 +6,12 @@
 >The Fourier transform makes a frequency domain expressed as complex numbers, so they need to be converted to real numbers to see the real value through the Pythagorean theorem.
 
 # How to derive the Fourier transform
-## [The complex fourier series is derived here.](https://github.com/vacu9708/Signal-processing/tree/main/Fourier%20series)
-![image](https://user-images.githubusercontent.com/67142421/158811827-513af3b1-0dfb-4319-a7d8-6c2ffa9b5688.png)<br>
->We know that (1/T) is a frequency. When T apporaches infinity, (1/T) becomes an infinitesimal frequency.<br>
-> Let infinitesimal frequency **(1/T) be dk** and n'th frequency **(n/T) be k**.
+## [The fourier series is derived here](https://github.com/vacu9708/Signal-processing/tree/main/Fourier%20series)
+![image](https://user-images.githubusercontent.com/67142421/177058850-25356d62-275e-40d5-81a4-c52cb83c03e6.png)
+
+1. We know that (1/T) is a frequency. When T apporaches infinity, (1/T) becomes an infinitesimal frequency.<br>
+2. Let infinitesimal frequency **(1/T) be dk** and n'th frequency **(n/T) be k**.<br>
+3. Let us suppose that the domain range is from -infinity to +infinity
 
 ![image](https://user-images.githubusercontent.com/67142421/158805467-fbd0db34-250a-43fa-8201-ed9b040fcc8b.png)
 
