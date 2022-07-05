@@ -2,8 +2,8 @@
 
 # Fourier transform
 ![image](https://user-images.githubusercontent.com/67142421/155687402-a9ae5d4a-9baa-4a83-ac6e-b504ebf805df.png)
->A Fourier transform is a method to find the frequencies of a function. The time domain is transformed to a frequency domain.<br>
->The Fourier transform makes a frequency domain expressed as complex numbers, so they need to be converted to real numbers to see the real value through the Pythagorean theorem.
+>A Fourier transform is a method to find the frequencies of a signal. The time domain is transformed to a frequency domain.<br>
+>The Fourier transform makes a frequency domain expressed as complex numbers, so they need to be converted to real numbers to see the real values.
 
 # How to derive the Fourier transform
 ## [The fourier series is derived here](https://github.com/vacu9708/Signal-processing/tree/main/Fourier%20series)
