@@ -8,6 +8,7 @@
 # How to derive the Fourier transform
 ## [The fourier series is derived here](https://github.com/vacu9708/Signal-processing/tree/main/Fourier%20series)
 T = a period t = time
+
 ![image](https://user-images.githubusercontent.com/67142421/177058850-25356d62-275e-40d5-81a4-c52cb83c03e6.png)
 
 1. We know that (1/T) is a frequency. When T apporaches infinity, (1/T) becomes an infinitesimal frequency.<br>
