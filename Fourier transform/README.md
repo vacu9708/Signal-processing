@@ -7,6 +7,7 @@
 
 # How to derive the Fourier transform
 ## [The fourier series is derived here](https://github.com/vacu9708/Signal-processing/tree/main/Fourier%20series)
+T = a period t = time
 ![image](https://user-images.githubusercontent.com/67142421/177058850-25356d62-275e-40d5-81a4-c52cb83c03e6.png)
 
 1. We know that (1/T) is a frequency. When T apporaches infinity, (1/T) becomes an infinitesimal frequency.<br>
@@ -23,7 +24,7 @@
 > Expression (1) can be expressed back as an integral from the Riemann sum.<br>
 >This expression means integrating the underlined **function, whose domain is comprised of frequencies, with respect to k(frequency)**.<br>
 >That is to say, the underlined expression has frequencies as its domain, which means it is the very ***Fourier transform*** that we were looking for.<br>
->Also, we can find out the **Inverse Fourier Transform** in this expression. Doing the similar calculation to a fourier transformed function converts the frequency domain to a time domain back.
+>Also, we can find out the **Inverse Fourier Transform** in this expression. Doing the similar calculation to a fourier transformed function converts ㅁ frequency domain to a time domain back.
 
 ## Fourier transform (Angular frequency ω = 2πf)
 ![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
