@@ -235,7 +235,7 @@ def inverse_FFT(signal): # The inverse fourier transform of a signal that have b
 
     return X
 
-def FFT2(signal): # Makes the same output as the FFT above.
+def FFT2(signal): # makes the same output as the FFT above.
     N = len(signal) # N has to be a power of 2 for FFT.
 
     if N == 1:
@@ -263,6 +263,7 @@ def find_main_frequency(X, frequency_resolution):
                 i_local_max = i+1 # Determine the index of the main frequency
                 break
     #-----'''
+    # Find the frequency with the biggest amplitude
     index_max = 0
     for i in range(sample_buffer_size//2):
         if X[i] > X[index_max]:
