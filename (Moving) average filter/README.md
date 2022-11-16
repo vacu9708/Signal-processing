@@ -49,19 +49,19 @@ values = [] # For plot
 filtered_values = [] # For plot
 LENGTH=20
 noisy_values = deque([0]*LENGTH)
-filtered_value = 0
+sum = 0
 for time in range(333):
     # Remove the oldest value
-    filtered_value-=noisy_values.popleft()
+    sum-=noisy_values.popleft()
     # Put the new value
     noise = random.randint(-20, 20) * 0.01
     noisy_values.append(math.sin(time * 0.1) + noise)
     # Find the average
-    filtered_value+=noisy_values[-1]
-    average=filtered_value / LENGTH
+    sum+=noisy_values[-1]
+    filtered_value=sum / LENGTH
     #For plot
     values.append(noisy_values[-1])
-    filtered_values.append(average)
+    filtered_values.append(filtered_value)
 # Display
 pyplot.plot(values)
 pyplot.plot(filtered_values)
