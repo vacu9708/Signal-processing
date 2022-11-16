@@ -49,10 +49,7 @@ import math
 import random
 from matplotlib import pyplot
 
-values_subset = [] # Will be a sinusoidal wave.
-# Initialization
-for i in range(20):
-    values_subset.append(0)
+values_subset = [0]*20 # Will be a sinusoidal wave.
 #-----
 values = [] # For plot
 filtered_values = [] # For plot
