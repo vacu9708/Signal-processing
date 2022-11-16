@@ -8,24 +8,20 @@ import math
 import random
 from matplotlib import pyplot
 
-def noise():   
-    return random.randint(-20, 20) * 0.01
 values = [] # For plot
 filtered_values = [] # For plot
 for time in range(333):
-    # Finding the average
-    value = 0
     filtered_value = 0
+    # Finding the average
     for i in range(20):
-        value = math.sin((time * 0.1) + (i % 10 * 0.01)) + noise() # same as analogRead
+        noise=random.randint(-20, 20) * 0.01
+        value = math.sin(time * 0.1) + noise
         filtered_value += value
     filtered_value /= 20
-    #-----
     # For plot
     values.append(value)
     filtered_values.append(filtered_value)
-    #-----
-# Print
+# Display
 pyplot.plot(values)
 pyplot.plot(filtered_values)
 pyplot.show()
@@ -45,35 +41,32 @@ pyplot.show()
 
 ## Code (The original signal is a noisy sinusoidal wave)
 ~~~Python
-import math
-import random
+import math,random
+from collections import deque
 from matplotlib import pyplot
 
-values_subset = [0]*20 # Will be a sinusoidal wave.
-#-----
 values = [] # For plot
 filtered_values = [] # For plot
+LENGTH=20
+noisy_values = deque([0]*LENGTH)
+filtered_value = 0
 for time in range(333):
-    # Removing the oldest value and putting the next value
-    values_subset.pop(0)
+    # Remove the oldest value
+    filtered_value-=noisy_values.popleft()
+    # Put the new value
     noise = random.randint(-20, 20) * 0.01
-    values_subset.append(math.sin(time * 0.1) + noise) # same as analogRead
-    #-----
-    # Finding the average
-    filtered_value = 0
-    for value in values_subset:
-        filtered_value += value
-    filtered_value /= 20
-    #-----
+    noisy_values.append(math.sin(time * 0.1) + noise)
+    # Find the average
+    filtered_value+=noisy_values[-1]
+    average=filtered_value / LENGTH
     #For plot
-    values.append(values_subset[19])
-    filtered_values.append(filtered_value)
-    #-----
-# Print
+    values.append(noisy_values[-1])
+    filtered_values.append(average)
+# Display
 pyplot.plot(values)
 pyplot.plot(filtered_values)
 pyplot.show()
 ~~~
 
 ## Output (Blue : original signal, Orange : filtered signal)
-![image](https://user-images.githubusercontent.com/67142421/153942769-f818e0c7-2621-4b09-b7c4-96c2373bb3d1.png)
+![image](https://user-images.githubusercontent.com/67142421/202138129-de96f212-70cc-4355-86a9-bb9045d94549.png)
