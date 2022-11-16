@@ -61,7 +61,7 @@ for time in range(333):
     # Find the average
     filtered_value=sum / LENGTH
     # For displaying
-    values.append(noisy_values[-1])
+    values.append(noisy_value)
     filtered_values.append(filtered_value)
 # Display
 pyplot.plot(values)
