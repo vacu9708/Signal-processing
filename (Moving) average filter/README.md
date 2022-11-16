@@ -53,13 +53,14 @@ sum = 0
 for time in range(333):
     # Remove the oldest value
     sum-=noisy_values.popleft()
-    # Put the new value
+    # Put a new value
     noise = random.randint(-20, 20) * 0.01
-    noisy_values.append(math.sin(time * 0.1) + noise)
+    noisy_value=math.sin(time * 0.1) + noise
+    noisy_values.append(noisy_value)
+    sum+=noisy_value
     # Find the average
-    sum+=noisy_values[-1]
     filtered_value=sum / LENGTH
-    #For plot
+    # For displaying
     values.append(noisy_values[-1])
     filtered_values.append(filtered_value)
 # Display
