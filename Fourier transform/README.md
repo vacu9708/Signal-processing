@@ -129,7 +129,8 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/67142421/155605699-0773c7d0-99fa-4773-ac15-3ddf48958146.png)
 
 ## How to derive FFT
-![image](https://user-images.githubusercontent.com/67142421/158342808-af6c272c-cce6-41de-999a-8af8bb85acfd.png)
+![image](https://user-images.githubusercontent.com/67142421/207888661-c9fa1da1-7801-4ecf-89ca-5e428b3f3d73.png)
+
 ### Therefore : ![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)<br>
 The divide and conquer method can be applied with this result to increase the speed.
 
