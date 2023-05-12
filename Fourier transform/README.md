@@ -44,10 +44,7 @@ The first index of an array is 0. That's why the last index is N-1.
 
 ### Characteristics
 * Maximum frequency limit = sampling frequency / 2
-* Frequency resolution 
-  >Frequency resolution = sampling frequency / number of data (For example : recording 2 seconds gives 0.5Hz resolution, recording 10 seconds gives 0.1Hz resolution. <br>
-  >The frequency resolution can be increased by either reducing the sampling frequency or increasing the size of the sample buffer, which means
-  >it will take longer to fill the buffer if we desire increased resolution.
+* Frequency resolution = 1 / recording time (e.g. : Recording 2 seconds gives 0.5Hz resolution, recording 10 seconds gives 0.1Hz resolution.)
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
 * The values on the right side of the niquist frequency are mirror frequencies, which have the opposite sign in the imaginary number.
 
@@ -129,7 +126,7 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/67142421/155605699-0773c7d0-99fa-4773-ac15-3ddf48958146.png)
 
 ## How to derive FFT
-![image](https://user-images.githubusercontent.com/67142421/207888661-c9fa1da1-7801-4ecf-89ca-5e428b3f3d73.png)
+![image](https://github.com/vacu9708/Signal-processing/assets/67142421/dd0da79c-7e5f-4b33-89cd-11771e2f314e)
 
 ### Therefore : ![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)<br>
 The divide and conquer method can be applied with this result to increase the speed.
