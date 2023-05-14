@@ -34,7 +34,7 @@ T = a period, t = time
 >A discrete time Fourier transform is performed to analyze a signal in the frequency domain with a computer.
 
 ![image](https://user-images.githubusercontent.com/67142421/158687851-e2ff15c5-a65a-4e61-8a31-a5d3585f9b2c.png)<br>
-The first index of an array is 0. That's why the last index is N-1.
+The last index is N-1 because the first index is 0.
 * The infinitesimal dt is 1 because it is discrete time.
 * n(sample) corresponds to t(time).
 * k corresponds to f (k'th frequency in the frequency domain)
