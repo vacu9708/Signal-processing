@@ -9,41 +9,40 @@
 ## [The fourier series is derived here](https://github.com/vacu9708/Signal-processing/tree/main/Fourier%20series)
 T = a period, t = time
 
-![image](https://user-images.githubusercontent.com/67142421/177058850-25356d62-275e-40d5-81a4-c52cb83c03e6.png)
+![image](https://github.com/vacu9708/Signal-processing/assets/67142421/37877be5-4750-4f8e-8624-3f663cd69c9a)
 
 1. We know that (1/T) is a frequency. When T apporaches infinity, (1/T) becomes an infinitesimal frequency.<br>
 2. Let infinitesimal frequency **(1/T) be dk** and n'th frequency **(n/T) be k**.<br>
 3. Let us suppose that the domain range is from -infinity to +infinity
 
-![image](https://user-images.githubusercontent.com/67142421/158805467-fbd0db34-250a-43fa-8201-ed9b040fcc8b.png)
-
-![image](https://user-images.githubusercontent.com/67142421/155689010-f04e9a51-ccba-4951-81d2-6346de16f5fc.png)
+![image](https://user-images.githubusercontent.com/67142421/158805467-fbd0db34-250a-43fa-8201-ed9b040fcc8b.png)<br>
+![image](https://user-images.githubusercontent.com/67142421/155689010-f04e9a51-ccba-4951-81d2-6346de16f5fc.png)<br>
+The outside Riemann sum of expression **(a)** can be converted to integral.<br>
 
 ## The derived result : Fourier Transform and Inverse Fourier Transform
-![image](https://user-images.githubusercontent.com/67142421/158805992-cf16d1f5-26db-4bb8-9379-aabcd485be32.png)<br>
+![image](https://user-images.githubusercontent.com/67142421/158805992-cf16d1f5-26db-4bb8-9379-aabcd485be32.png)
 
-> Expression (1) can be expressed back as an integral from the Riemann sum.<br>
->This expression means integrating the underlined **function, whose domain is comprised of frequencies, with respect to k(frequency)**.<br>
->That is to say, the underlined expression has frequencies as its domain, which means it is the very ***Fourier transform*** that we were looking for.<br>
->Also, we can find out the **Inverse Fourier Transform** in this expression. Doing the similar calculation to a fourier transformed function converts ㅁ frequency domain to a time domain back.
+This expression means integrating the underlined **function whose domain is comprised of frequencies, with respect to k(frequency)**.<br>
+That is to say, the underlined expression has frequencies as its domain, which means it is the very ***Fourier transform*** that we were looking for.<br>
+Also, we can find out the **Inverse Fourier Transform** in this expression. Doing the similar calculation to a fourier transformed function converts ㅁ frequency domain to a time domain back.
 
-## Fourier transform (Angular frequency ω = 2πf)
+## Fourier transform (Angular frequency ω = 2πk)
 ![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
 
 ## Discrete time Fourier Transform
->A discrete time Fourier transform is performed to analyze a signal in the frequency domain with a computer.
+A discrete time Fourier transform is performed to analyze a signal in the frequency domain.
 
 ![image](https://user-images.githubusercontent.com/67142421/158687851-e2ff15c5-a65a-4e61-8a31-a5d3585f9b2c.png)<br>
-The last index is N-1 because the first index is 0.
-* The infinitesimal dt is 1 because it is discrete time.
-* n(sample) corresponds to t(time).
-* k corresponds to f (k'th frequency in the frequency domain)
+- The last index is N-1 because the first index is 0.
+- The infinitesimal dt is 1 because it is discrete time.
+- n(sample) corresponds to t(time).
+- k is k'th frequency in the frequency domain
 
 ### By Euler's formula :
 ![image](https://user-images.githubusercontent.com/67142421/155604064-dac589d7-b367-4648-9202-df41ea56f8be.png)
 
 ### Characteristics
-* Maximum frequency limit = sampling frequency / 2
+* Maximum frequency limit = sampling frequency / 2 (Nyquist frequency)
 * Frequency resolution = 1 / recording time (e.g. : Recording 2 seconds gives 0.5Hz resolution, recording 10 seconds gives 0.1Hz resolution.)
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
 * The values on the right side of the niquist frequency are mirror frequencies, which have the opposite sign in the imaginary number.
