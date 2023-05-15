@@ -20,11 +20,10 @@ T = a period, t = time
 The outside Riemann sum of expression **(a)** can be converted to integral.<br>
 
 ## The derived result : Fourier Transform and Inverse Fourier Transform
-![image](https://user-images.githubusercontent.com/67142421/158805992-cf16d1f5-26db-4bb8-9379-aabcd485be32.png)
-
-This expression means integrating the underlined **function whose domain is comprised of frequencies, with respect to k(frequency)**.<br>
-That is to say, the underlined expression has frequencies as its domain, which means it is the very ***Fourier transform*** that we were looking for.<br>
-Also, we can find out the **Inverse Fourier Transform** in this expression. Doing the similar calculation to a fourier transformed function converts ㅁ frequency domain to a time domain back.
+![image](https://github.com/vacu9708/Signal-processing/assets/67142421/2448329a-869b-459b-a89c-fa38e2836864)<br>
+This expression means:
+- The red integral is in frequency domain because integration with respect to time eliminates time. **Fourier Transform**
+- The same way, the green integral converts the frequency domain to time domain, that is, the original function. **Inverse Fourier Transform **
 
 ## Fourier transform (Angular frequency ω = 2πk)
 ![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
