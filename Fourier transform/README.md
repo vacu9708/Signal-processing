@@ -136,7 +136,7 @@ import time
 from matplotlib import pyplot as plt
 import numpy as np
 import math
-import wave, pyaudio
+import wave#, pyaudio
 import random
 
 pi = np.pi
@@ -200,48 +200,32 @@ def FFT(signal):
     X_even = FFT(signal[::2]) # Fourier transformed function of the signal at even indices
     X_odd = FFT(signal[1::2]) # at odd indices
 
-    e = np.array([Complex_number for i in range(N)])
-    for k in range(N):
-        e[k] = Complex_number(math.cos(2*pi*k / N), -math.sin(2*pi*k / N))
+    def e(k):
+        return Complex_number(math.cos(2*pi*k / N), -math.sin(2*pi*k / N))
 
     X = np.array([Complex_number for i in range(N)])
     for k in range(N//2):
-        X[k] = X_even[k] + X_odd[k] * e[k]
-        X[N//2 + k] = X_even[k] + X_odd[k] * e[N//2 + k] # N/2 + k is equal to k because N/2 is one period in X_even and X_odd.
+        X[k] = X_even[k] + X_odd[k] * e(k)
+        X[N//2 + k] = X_even[k] + X_odd[k] * e(N//2 + k) # X[N/2 + k] is equal to X[k] because N/2 is one period
 
     return X
 
-def inverse_FFT(signal): # The inverse fourier transform of a signal that have become absolute values makes a wrong output.
-    N = len(signal) # N has to be a power of 2 for FFT.
-
-    if N == 1: # The fourier transform of a signal whose size is 0 makes the original signal.
-        return signal # Has to be a complex number
-    
-    X_even = inverse_FFT(signal[::2]) # Fourier transformed function of the signal at even indices
-    X_odd = inverse_FFT(signal[1::2]) # at odd indices
-
-    e = np.array([Complex_number for i in range(N)])
-    for k in range(N):
-        e[k] = Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N)) # The minus that was on the sin changes to plus
-
-    X = np.array([Complex_number for i in range(N)])
-    for k in range(N//2):
-        X[k] = X_even[k] + X_odd[k] * e[k]
-        X[N//2 + k] = X_even[k] + X_odd[k] * e[N//2 + k] # N/2 + k is equal to k because N/2 is one period in X_even and X_odd.
-
-    return X
-
-def FFT2(signal): # makes the same output as the FFT above.
-    N = len(signal) # N has to be a power of 2 for FFT.
+def inverse_FFT(signal): # Inverse fourier transform of a signal that have become absolute values makes a wrong output.
+    N = len(signal)
 
     if N == 1:
         return signal
     
-    X_even = FFT2(signal[::2]) # FFT of the signal at even indices
-    X_odd = FFT2(signal[1::2]) # at odd indices
+    X_even = inverse_FFT(signal[::2])
+    X_odd = inverse_FFT(signal[1::2])
 
-    e = np.exp(-2j*pi*np.arange(N) / N)
-    X = np.concatenate( (X_even + X_odd * e[:N//2], X_even + X_odd * e[N//2:]) )
+    def e(k):
+        return Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N)) # The minus that was on the sin changes to plus
+
+    X = np.array([Complex_number for i in range(N)])
+    for k in range(N//2):
+        X[k] = X_even[k] + X_odd[k] * e(k)
+        X[N//2 + k] = X_even[k] + X_odd[k] * e(N//2 + k) 
 
     return X
 
@@ -282,16 +266,16 @@ print('\n\nMain frequency : {}'.format(main_frequency))
 inverse_X = absolute_IFFT(inverse_FFT(X))
 
 # Play the sound
-py_audio = pyaudio.PyAudio()
-stream = py_audio.open(output=True,
-            channels=1,
-            rate=int(sampling_frequency),
-            format=pyaudio.paInt32,
-            )
-stream.write(inverse_X.astype(np.int32))
+# py_audio = pyaudio.PyAudio()
+# stream = py_audio.open(output=True,
+#             channels=1,
+#             rate=int(sampling_frequency),
+#             format=pyaudio.paInt32,
+#             )
+# stream.write(inverse_X.astype(np.int32))
 #-----
 
------Plot
+#-----Plot
 plt.title('Sampled signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), signal)
 plt.xlabel('Time')
