@@ -136,7 +136,7 @@ import time
 from matplotlib import pyplot as plt
 import numpy as np
 import math
-import wave, pyaudio
+import wave#, pyaudio
 import random
 
 pi = np.pi
@@ -231,20 +231,6 @@ def inverse_FFT(signal): # The inverse fourier transform of a signal that have b
 
     return X
 
-def FFT2(signal): # makes the same output as the FFT above.
-    N = len(signal) # N has to be a power of 2 for FFT.
-
-    if N == 1:
-        return signal
-    
-    X_even = FFT2(signal[::2]) # FFT of the signal at even indices
-    X_odd = FFT2(signal[1::2]) # at odd indices
-
-    e = np.exp(-2j*pi*np.arange(N) / N)
-    X = np.concatenate( (X_even + X_odd * e[:N//2], X_even + X_odd * e[N//2:]) )
-
-    return X
-
 def find_main_frequency(X, frequency_resolution):
     '''Using the local max point
     for i in range(20, sample_buffer_size//2):
@@ -282,16 +268,16 @@ print('\n\nMain frequency : {}'.format(main_frequency))
 inverse_X = absolute_IFFT(inverse_FFT(X))
 
 # Play the sound
-py_audio = pyaudio.PyAudio()
-stream = py_audio.open(output=True,
-            channels=1,
-            rate=int(sampling_frequency),
-            format=pyaudio.paInt32,
-            )
-stream.write(inverse_X.astype(np.int32))
+# py_audio = pyaudio.PyAudio()
+# stream = py_audio.open(output=True,
+#             channels=1,
+#             rate=int(sampling_frequency),
+#             format=pyaudio.paInt32,
+#             )
+# stream.write(inverse_X.astype(np.int32))
 #-----
 
------Plot
+#-----Plot
 plt.title('Sampled signal')
 plt.plot(np.arange(0, sample_buffer_size/sampling_frequency, 1/sampling_frequency), signal)
 plt.xlabel('Time')
