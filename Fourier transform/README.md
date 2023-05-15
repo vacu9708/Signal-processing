@@ -20,10 +20,10 @@ T = a period, t = time
 The outside Riemann sum of expression **(a)** can be converted to integral.<br>
 
 ## The derived result : Fourier Transform and Inverse Fourier Transform
-![image](https://github.com/vacu9708/Signal-processing/assets/67142421/2448329a-869b-459b-a89c-fa38e2836864)<br>
+![image](https://github.com/vacu9708/Signal-processing/assets/67142421/b50e468e-b125-4a2c-a703-177beced400e)<br>
 This expression means:
 - The red integral is in frequency domain because integration with respect to time eliminates time. **Fourier Transform**
-- The same way, the green integral converts the frequency domain to time domain, that is, the original function. **Inverse Fourier Transform **
+- The same way, the green integral converts the frequency domain to time domain, that is, the original function. **Inverse Fourier Transform**
 
 ## Fourier transform (Angular frequency ω = 2πk)
 ![image](https://user-images.githubusercontent.com/67142421/155603554-7edd2873-0942-4465-a931-b6f07a5494da.png)
@@ -46,7 +46,7 @@ A discrete time Fourier transform is performed to analyze a signal in the freque
 * The sampling of a signal whose frequencies are not an integer multiple of the frequency resolution results in a jump in the time signal, and a "smeared" FFT spectrum.
 * The values on the right side of the niquist frequency are mirror frequencies, which have the opposite sign in the imaginary number.
 
-### Frequency shift(I noted this down but I am not sure)
+### Frequency shift(I noted this down without being sure)
 Frequency Shift, or Modulation
 * Multiplying exp(-j2πf0t) in the time domain is the same as shifting f0. >> exp(j2πf0t) x(t) = X(f-f0)
 * cos(2πf0t) x(t) = 1/2 [ X(f-f0) + X(f+f0) ]
