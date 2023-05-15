@@ -66,34 +66,32 @@ def FFT(signal):
     X_even = FFT(signal[::2]) # Fourier transformed function of the signal at even indices
     X_odd = FFT(signal[1::2]) # at odd indices
 
-    e = np.array([Complex_number for i in range(N)])
-    for k in range(N):
-        e[k] = Complex_number(math.cos(2*pi*k / N), -math.sin(2*pi*k / N))
+    def e(k):
+        return Complex_number(math.cos(2*pi*k / N), -math.sin(2*pi*k / N))
 
     X = np.array([Complex_number for i in range(N)])
     for k in range(N//2):
-        X[k] = X_even[k] + X_odd[k] * e[k]
-        X[N//2 + k] = X_even[k] + X_odd[k] * e[N//2 + k] # N/2 + k is equal to k because N/2 is one period in X_even and X_odd.
+        X[k] = X_even[k] + X_odd[k] * e(k)
+        X[N//2 + k] = X_even[k] + X_odd[k] * e(N//2 + k) # X[N/2 + k] is equal to X[k] because N/2 is one period
 
     return X
 
-def inverse_FFT(signal): # The inverse fourier transform of a signal that have become absolute values makes a wrong output.
-    N = len(signal) # N has to be a power of 2 for FFT.
+def inverse_FFT(signal): # Inverse fourier transform of a signal that have become absolute values makes a wrong output.
+    N = len(signal)
 
-    if N == 1: # The fourier transform of a signal whose size is 0 makes the original signal.
-        return signal # Has to be a complex number
+    if N == 1:
+        return signal
     
-    X_even = inverse_FFT(signal[::2]) # Fourier transformed function of the signal at even indices
-    X_odd = inverse_FFT(signal[1::2]) # at odd indices
+    X_even = inverse_FFT(signal[::2])
+    X_odd = inverse_FFT(signal[1::2])
 
-    e = np.array([Complex_number for i in range(N)])
-    for k in range(N):
-        e[k] = Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N)) # The minus that was on the sin changes to plus
+    def e(k):
+        return Complex_number(math.cos(2*pi*k / N), math.sin(2*pi*k / N)) # The minus that was on the sin changes to plus
 
     X = np.array([Complex_number for i in range(N)])
     for k in range(N//2):
-        X[k] = X_even[k] + X_odd[k] * e[k]
-        X[N//2 + k] = X_even[k] + X_odd[k] * e[N//2 + k] # N/2 + k is equal to k because N/2 is one period in X_even and X_odd.
+        X[k] = X_even[k] + X_odd[k] * e(k)
+        X[N//2 + k] = X_even[k] + X_odd[k] * e(N//2 + k) 
 
     return X
 
