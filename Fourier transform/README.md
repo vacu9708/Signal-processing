@@ -247,12 +247,12 @@ def find_main_frequency(X, frequency_resolution):
     index_max = 0
     for i in range(sample_buffer_size//2):
         if X[i] > X[index_max]:
-            index_max = i
-    # Proportional distribution
-    proportional_distribution = 1 / (X[index_max-1]+X[index_max]+X[index_max+1])
-    frequency1 = X[index_max-1] * proportional_distribution * (index_max-1)
-    frequency2 = X[index_max] * proportional_distribution * index_max
-    frequency3 = X[index_max+1] * proportional_distribution * (index_max+1)
+            freq_with_max_amplitude = i
+    # Proportional distribution to mitigate the frequency error value
+    proportional_distribution = 1 / (X[freq_with_max_amplitude-1]+X[freq_with_max_amplitude]+X[freq_with_max_amplitude+1])
+    frequency1 = X[freq_with_max_amplitude-1] * proportional_distribution * (freq_with_max_amplitude-1)
+    frequency2 = X[freq_with_max_amplitude] * proportional_distribution * freq_with_max_amplitude
+    frequency3 = X[freq_with_max_amplitude+1] * proportional_distribution * (freq_with_max_amplitude+1)
     main_frequency = (frequency1+frequency2+frequency3)*frequency_resolution
     #-----
     return main_frequency
