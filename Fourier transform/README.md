@@ -127,7 +127,7 @@ plt.show()
 ![image](https://github.com/vacu9708/Signal-processing/assets/67142421/dd0da79c-7e5f-4b33-89cd-11771e2f314e)
 
 ### Therefore : ![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)<br>
-The divide and conquer method can be applied with this result to increase the speed.
+The divide and conquer method is applied to this result formula for `NlogN`.<br>
 
 ### [Click -> The time complexity of Divide and conquer method](https://github.com/vacu9708/Algorithm/tree/main/Sorting%20algorithm/Merge%20sort)
 
