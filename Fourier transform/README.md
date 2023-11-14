@@ -1,4 +1,4 @@
-<meta name="google-site-verification" content="nrOobyUoslWeNsafQbneSXSrFu-aU7ckZ-LwiT7ChVY" />
+![image](https://github.com/vacu9708/Signal-processing/assets/67142421/ef72ef72-ffce-41cd-bb5f-4d54bb0470a4)<meta name="google-site-verification" content="nrOobyUoslWeNsafQbneSXSrFu-aU7ckZ-LwiT7ChVY" />
 
 # Fourier transform
 ![image](https://user-images.githubusercontent.com/67142421/155687402-a9ae5d4a-9baa-4a83-ac6e-b504ebf805df.png)
@@ -127,6 +127,7 @@ plt.show()
 ![image](https://github.com/vacu9708/Signal-processing/assets/67142421/dd0da79c-7e5f-4b33-89cd-11771e2f314e)
 
 ### Therefore : ![image](https://user-images.githubusercontent.com/67142421/155988816-faf0e483-79bf-4088-b289-80370effb376.png)<br>
+X_even means a fourier-transformed function with regard to the even time points.<br>
 The divide and conquer method is applied to this result formula for `NlogN`.<br>
 
 ### [Click -> The time complexity of Divide and conquer method](https://github.com/vacu9708/Algorithm/tree/main/Sorting%20algorithm/Merge%20sort)
