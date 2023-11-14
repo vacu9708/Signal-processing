@@ -1,5 +1,3 @@
-![image](https://github.com/vacu9708/Signal-processing/assets/67142421/ef72ef72-ffce-41cd-bb5f-4d54bb0470a4)<meta name="google-site-verification" content="nrOobyUoslWeNsafQbneSXSrFu-aU7ckZ-LwiT7ChVY" />
-
 # Fourier transform
 ![image](https://user-images.githubusercontent.com/67142421/155687402-a9ae5d4a-9baa-4a83-ac6e-b504ebf805df.png)
 >A Fourier transform is a method to find the frequencies of a signal. The time domain is transformed to a frequency domain.<br>
